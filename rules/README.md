@@ -9,6 +9,7 @@ acá desde sus archivos de herramienta (`AGENTS.md`, `.mdc`).
 | [declaracion-vs-explicacion.md](declaracion-vs-explicacion.md) | Al crear o editar cualquier regla, skill o hook |
 | [alcance-disciplinado.md](alcance-disciplinado.md) | Al implementar cualquier plan o pedido |
 | [comunicacion-pedagogica.md](comunicacion-pedagogica.md) | Al redactar respuestas, reviews, commits o docs |
+| [aviso-brecha-skill.md](aviso-brecha-skill.md) | Al crear un archivo/script para completar lo que un skill no cubrió |
 
 ## ¿Regla (AGENTS) o skill?
 

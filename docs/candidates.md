@@ -37,10 +37,10 @@ Notas 1-10 asignadas por Tomás (2026-07-14). Las observaciones extendidas van e
 | 7 | **Orquestación y economía de modelos** | tabla tarea→tipo de agente→modelo; delegar mecánico a modelos gratis; skills orchestrate / orchestrate-opencode | `doterra/AGENTS.md` § Enrutamiento, `~/.bb/skills/orchestrate*`, `doterra/.bb/skills/orchestrate-opencode` (duplicación resuelta 2026-07-15) | Parcial — `skills/orchestrate-opencode/` centralizada con symlinks desde ~/.bb y doterra; resto de skills aún en ~/.bb | **9** |
 | 8 | **Documentación continua ("no repetir lo mismo en otro contexto")** | cada aclaración → evaluar si documentarla; reglas de agente van a AGENTS.md, nunca solo a memoria privada; hooks/skills creados deben documentarse en el README más cercano | `doterra/AGENTS.md` § Decisiones y preguntas, § Programación | Ninguna | **10** |
 | 9 | **Captura y release bajo demanda** | INBOX.md + taxonomía + /process-inbox; CHANGELOG solo al tag; /sync-docs contrastando main; /tag-release | `doterra/INBOX.md`, `.cursor/commands/{process-inbox,sync-docs,tag-release}.md` | Ninguna | **5** — proceso débil actualmente |
-| 10 | **Skills de diagnóstico y producto** | css-debug pedagógico en 4 fases; product-expert-definition-of-ready; design-look-feel; screenshot | `~/.bb/skills/` (4 skills) | Parcial (viven en ~/.bb, no en este repo) | **Sin nota** — agruparlas es un error; desagrupar según el tema de cada skill |
+| 10 | **Skills de diagnóstico y producto** | css-debug pedagógico en 4 fases; product-expert-definition-of-ready; design-look-feel; screenshot | `~/.bb/skills/` (4 skills) | Parcial — `product-expert-definition-of-ready` centralizada con symlink desde ~/.bb (2026-07-15); resto aún en ~/.bb | **Sin nota** — agruparlas es un error; desagrupar según el tema de cada skill |
 | 11 | **Codestyles con fuente de verdad** | Graffiti class-first + tokens; estado Svelte local-first; vocabulario de dominio en nombres | `doterra/.cursor/rules/{graffiti,svelte-state}-codestyle.mdc`, `devs/codestyles/` | Ninguna — probablemente NO centralizable (específico de doterra), salvo el meta-patrón | **Sin nota** — muy particular al repo y sus herramientas, difícil de portar; buscar reglas redactadas de forma agnóstica |
 | 12 | **Herramientas y fuentes acotadas** | allowlist de rutas del vault (`context/sources.md`); scope estricto de browser-gateway | `doterra/AGENTS.md` § Fuentes, § Programación | Ninguna | **4** |
-| 13 | **Narrativa de producto como artefacto** *(propuesto)* | narrativa antes que spec; narrativas UX como documento propio; evaluación por dimensiones de persuasión (narrativa, framing, copy, conducta); narrativa como criterio de ready | "Narrativa ≠ spec" (extraído del cluster 2), `~/.bb/skills/product-expert-definition-of-ready`, `design-look-feel` (brief como narrativa visual) | Parcial (la skill vive en ~/.bb) | pendiente de evaluar |
+| 13 | **Narrativa de producto como artefacto** *(propuesto)* | narrativa antes que spec; narrativas UX como documento propio; evaluación por dimensiones de persuasión (narrativa, framing, copy, conducta); narrativa como criterio de ready | "Narrativa ≠ spec" (extraído del cluster 2), `skills/product-expert-definition-of-ready` (centralizada 2026-07-15), `design-look-feel` (brief como narrativa visual) | Parcial — la skill de ready ya centralizada; el resto del cluster pendiente | pendiente de evaluar |
 
 ## Detalle por cluster
 
@@ -117,7 +117,7 @@ Notas 1-10 asignadas por Tomás (2026-07-14). Las observaciones extendidas van e
 
 ### 10. Skills de diagnóstico y producto (~/.bb/skills)
 - `css-debug-explain-solve-and-suggest` — diagnóstico CSS pedagógico en 4 fases.
-- `product-expert-definition-of-ready` — evaluación de cambios de producto en 4 dimensiones.
+- `product-expert-definition-of-ready` — evaluación de cambios de producto en 4 dimensiones. **Centralizada** — `skills/product-expert-definition-of-ready/`; `~/.bb/skills/` apunta acá por symlink (2026-07-15).
 - `design-look-feel` — proceso de diseño con control de costo por modelo.
 - `screenshot` — capturas de HTML con Playwright.
 - **Ya son "centralizadas" de facto** (globales en ~/.bb) — la decisión es si este repo pasa a ser su fuente de verdad versionada.
