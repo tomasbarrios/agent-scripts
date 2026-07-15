@@ -9,9 +9,18 @@ se promueve — este archivo es solo el índice.
 - **Evaluación (2026-07-14):** notas 1-10 asignadas por Tomás en la tabla; el
   detalle de cada cluster incluye una sección **Observación mía** con su
   comentario. Pendiente: revisar el detalle por cluster.
-- **Pregunta abierta:** al centralizar una regla, ¿qué pasa en el repo origen?
-  (puntero al central / copia divergente / no tocar). Sin resolver — ver
-  [`docs/design.md`](docs/design.md) § patrones de distribución.
+- **Resuelto (2026-07-15, estrategia steipete):** skills → symlink absoluto;
+  reglas → el `AGENTS.md` del proyecto empieza con
+  `READ ~/Projects/agent-scripts/AGENTS.MD BEFORE ANYTHING (skip if missing).`
+  y conserva solo lo específico del proyecto.
+
+## Cómo promover un candidato
+
+1. Escribir la regla agnóstica en `rules/` (o mover la skill a `skills/`).
+2. Declararla corta en el `AGENTS.md` central.
+3. Dejar puntero en el repo origen: symlink para skills; para reglas basta
+   la línea READ.
+4. Actualizar estado y cobertura en este archivo.
 
 ## Resumen de clusters
 
@@ -22,10 +31,10 @@ Notas 1-10 asignadas por Tomás (2026-07-14). Las observaciones extendidas van e
 | 1 | **Etapas de desarrollo (MIW/MIR/MIF)** | definición de fases; qué NO es cada fase; cierre de fase con backlog | `doterra/mvp/docs/devs/process-miw.md`, ADR-003, `AGENTS.md` § Alcance | Ninguna | **10** |
 | 2 | **Specs/docs antes de programar** | taxonomía documental (analysis/design/exploration/ADR/devs/domain/product); flujo INBOX → hipótesis → opportunities → ROADMAP; "Narrativa ≠ spec" | `doterra/mvp/docs/README.md`, `inbox-taxonomia.md`, `.cursor/commands/process-inbox.md` | Ninguna | **10** |
 | 3 | **Navegación por README / eficiencia de contexto** | README como enrutador (no resumen); regla de navegación en 4 pasos; detalle proporcional a la jerarquía; mantenimiento del README como índice fiel | `doterra/AGENTS.md` § Navegación por README | Ninguna | **8** — es mi método actual, pero no necesariamente quiero mantenerlo |
-| 4 | **Declaración vs explicación (regla corta → doc extendida)** | patrón `.cursor/rules/*.mdc` con "Fuente de verdad: docs/..."; filosofía "si es valioso para un humano, no va en archivo oculto" | las 5 reglas de `doterra/.cursor/rules/` siguen este patrón | Ninguna (es TU meta-patrón — buen primer centralizado) | **8** — me gusta centralizar la explicación |
-| 5 | **Alcance disciplinado / YAGNI** | solo lo aprobado (opcional/MIR/considerar no se codifica); sin comportamiento DOM sorpresa; no infra especulativa sin dolor repetido; no salir del repo sin aprobación | `doterra/AGENTS.md` § YAGNI y § Alcance, `.cursor/rules/alcance-implementacion.mdc` | Ninguna | **10** |
-| 6 | **Comunicación pedagógica** | humano primero / técnico después; explicar el porqué; Antes/Después/Porqué en cambios de código; review estilo tech lead; archivos `aprendizaje-NN` | `doterra/AGENTS.md` § Estilo, `.cursor/rules/antes-despues-aprendizaje.mdc`, `techlead-review.mdc`, `devs/aprendizaje-0*.md` | Ninguna | **10** |
-| 7 | **Orquestación y economía de modelos** | tabla tarea→tipo de agente→modelo; delegar mecánico a modelos gratis; skills orchestrate / orchestrate-opencode | `doterra/AGENTS.md` § Enrutamiento, `~/.bb/skills/orchestrate*`, `doterra/.bb/skills/orchestrate-opencode` (¡duplicada en 2 fuentes!) | Parcial (skills viven en ~/.bb, no acá) | **9** |
+| 4 | **Declaración vs explicación (regla corta → doc extendida)** | patrón `.cursor/rules/*.mdc` con "Fuente de verdad: docs/..."; filosofía "si es valioso para un humano, no va en archivo oculto" | las 5 reglas de `doterra/.cursor/rules/` siguen este patrón | **Centralizada** — `rules/declaracion-vs-explicacion.md` (2026-07-15) | **8** — me gusta centralizar la explicación |
+| 5 | **Alcance disciplinado / YAGNI** | solo lo aprobado (opcional/MIR/considerar no se codifica); sin comportamiento DOM sorpresa; no infra especulativa sin dolor repetido; no salir del repo sin aprobación | `doterra/AGENTS.md` § YAGNI y § Alcance, `.cursor/rules/alcance-implementacion.mdc` | **Centralizada** — `rules/alcance-disciplinado.md`; doterra ya apunta acá (2026-07-15) | **10** |
+| 6 | **Comunicación pedagógica** | humano primero / técnico después; explicar el porqué; Antes/Después/Porqué en cambios de código; review estilo tech lead; archivos `aprendizaje-NN` | `doterra/AGENTS.md` § Estilo, `.cursor/rules/antes-despues-aprendizaje.mdc`, `techlead-review.mdc`, `devs/aprendizaje-0*.md` | **Centralizada** — `rules/comunicacion-pedagogica.md`; doterra ya apunta acá (2026-07-15) | **10** |
+| 7 | **Orquestación y economía de modelos** | tabla tarea→tipo de agente→modelo; delegar mecánico a modelos gratis; skills orchestrate / orchestrate-opencode | `doterra/AGENTS.md` § Enrutamiento, `~/.bb/skills/orchestrate*`, `doterra/.bb/skills/orchestrate-opencode` (duplicación resuelta 2026-07-15) | Parcial — `skills/orchestrate-opencode/` centralizada con symlinks desde ~/.bb y doterra; resto de skills aún en ~/.bb | **9** |
 | 8 | **Documentación continua ("no repetir lo mismo en otro contexto")** | cada aclaración → evaluar si documentarla; reglas de agente van a AGENTS.md, nunca solo a memoria privada; hooks/skills creados deben documentarse en el README más cercano | `doterra/AGENTS.md` § Decisiones y preguntas, § Programación | Ninguna | **10** |
 | 9 | **Captura y release bajo demanda** | INBOX.md + taxonomía + /process-inbox; CHANGELOG solo al tag; /sync-docs contrastando main; /tag-release | `doterra/INBOX.md`, `.cursor/commands/{process-inbox,sync-docs,tag-release}.md` | Ninguna | **5** — proceso débil actualmente |
 | 10 | **Skills de diagnóstico y producto** | css-debug pedagógico en 4 fases; product-expert-definition-of-ready; design-look-feel; screenshot | `~/.bb/skills/` (4 skills) | Parcial (viven en ~/.bb, no en este repo) | **Sin nota** — agruparlas es un error; desagrupar según el tema de cada skill |
