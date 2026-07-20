@@ -15,6 +15,9 @@ OpenCode). Fuente de verdad única; los proyectos apuntan acá.
   [`candidates.md`](docs/candidates.md) (pipeline candidato → centralizado),
   [`plan-primeros-pasos.md`](docs/plan-primeros-pasos.md) (plan vigente),
   [`design.md`](docs/design.md) (diseño de la distribución).
+- [`docs-kit/`](docs-kit/) — **método portable de organización de docs** (taxonomía
+  carpeta ↔ pregunta). Copiar/clonar a otro proyecto u otra máquina: ver
+  [`docs-kit/ADOPT.md`](docs-kit/ADOPT.md). Versión: [`docs-kit/VERSION`](docs-kit/VERSION).
 
 ## Ciclo de vida de una regla
 

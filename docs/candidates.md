@@ -29,7 +29,7 @@ Notas 1-10 asignadas por Tomás (2026-07-14). Las observaciones extendidas van e
 | # | Cluster | Subclusters | Evidencia principal | Cobertura central | Nota (tú) |
 |---|---------|-------------|--------------------|-------------------|-----------|
 | 1 | **Etapas de desarrollo (MIW/MIR/MIF)** | definición de fases; qué NO es cada fase; cierre de fase con backlog | `doterra/mvp/docs/devs/process-miw.md`, ADR-003, `AGENTS.md` § Alcance | Ninguna | **10** |
-| 2 | **Specs/docs antes de programar** | taxonomía documental (analysis/design/exploration/ADR/devs/domain/product); flujo INBOX → hipótesis → opportunities → ROADMAP; "Narrativa ≠ spec" | `doterra/mvp/docs/README.md`, `inbox-taxonomia.md`, `.cursor/commands/process-inbox.md` | Ninguna | **10** |
+| 2 | **Specs/docs antes de programar** | taxonomía documental (analysis/design/exploration/ADR/devs/domain/product/rfcs); flujo exploración → opportunities → ROADMAP; "Narrativa ≠ spec" | `doterra/mvp/docs/README.md`, `inbox-taxonomia.md` | **Centralizado (parcial)** — `docs-kit/` v0.1.0 (2026-07-20) | **10** |
 | 3 | **Navegación por README / eficiencia de contexto** | README como enrutador (no resumen); regla de navegación en 4 pasos; detalle proporcional a la jerarquía; mantenimiento del README como índice fiel | `doterra/AGENTS.md` § Navegación por README | Ninguna | **8** — es mi método actual, pero no necesariamente quiero mantenerlo |
 | 4 | **Declaración vs explicación (regla corta → doc extendida)** | patrón `.cursor/rules/*.mdc` con "Fuente de verdad: docs/..."; filosofía "si es valioso para un humano, no va en archivo oculto" | las 5 reglas de `doterra/.cursor/rules/` siguen este patrón | **Centralizada** — `rules/declaracion-vs-explicacion.md` (2026-07-15) | **8** — me gusta centralizar la explicación |
 | 5 | **Alcance disciplinado / YAGNI** | solo lo aprobado (opcional/MIR/considerar no se codifica); sin comportamiento DOM sorpresa; no infra especulativa sin dolor repetido; no salir del repo sin aprobación | `doterra/AGENTS.md` § YAGNI y § Alcance, `.cursor/rules/alcance-implementacion.mdc` | **Centralizada** — `rules/alcance-disciplinado.md`; doterra ya apunta acá (2026-07-15) | **10** |
@@ -53,10 +53,11 @@ Notas 1-10 asignadas por Tomás (2026-07-14). Las observaciones extendidas van e
 > **Observación mía (nota 10):** —
 
 ### 2. Specs/docs antes de programar
-- Taxonomía de carpetas con regla de clasificación rápida por tipo de pregunta ("¿qué decidimos?" → ADR; "¿cómo lo implementamos?" → devs/; "¿qué exploramos?" → design/). Fuente: `mvp/docs/README.md`.
-- Pipeline de decantación: INBOX → `exploration/hipotesis.md` (sin validar) → `product/opportunities.md` (validado) → ROADMAP (comprometido). El ROADMAP solo contiene trabajo decidido.
+- Taxonomía de carpetas con regla de clasificación rápida por tipo de pregunta ("¿qué decidimos?" → ADR; "¿cómo lo implementamos?" → devs/; "¿qué exploramos?" → design/; approach → rfcs/). Fuente: `mvp/docs/README.md`.
+- Pipeline de decantación: ideas sin validar → opportunities → ROADMAP. El ROADMAP solo contiene trabajo decidido. Approach técnico elaborado → `rfcs/`; hechos del mundo externo → `domain/` (sin MVP).
 - "Narrativa ≠ spec": exploración UX va a docs, no a código, hasta pedido explícito.
 - **Generalizable:** la taxonomía y el pipeline sí; los nombres de carpeta podrían variar por repo.
+- **Centralizado (2026-07-20):** kit portable en [`../docs-kit/`](../docs-kit/) (templates + ADOPT + ejemplo domain vs RFC). Inbox/process-inbox sigue en doterra hasta otra promoción.
 
 > **Observación mía (nota 10):** — (ver también cluster 13: el tema "Narrativa ≠ spec" se extrae como dimensión propia)
 
