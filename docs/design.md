@@ -79,10 +79,10 @@ aparecen tres estrategias distintas para "llevar" contenido desde un repo
 central a `~/.claude/...` o `.claude/...` en cada proyecto:
 
 1. **Symlink tracked en git.** El repo central tiene la skill real en una
-   ubicación canónica (ej. `mi-otro-repo/.agents/skills/foo`) y el repo de
-   skills apunta ahí con un symlink versionado. Sin duplicación de contenido,
-   pero requiere que ambos repos estén clonados en el mismo filesystem con
-   rutas relativas estables.
+   ubicación canónica (en este repo: `skills/<nombre>/`; en otro repo podría
+   ser p.ej. `mi-otro-repo/.agents/skills/foo`) y el consumidor apunta ahí
+   con un symlink. Sin duplicación de contenido, pero requiere que ambos
+   repos estén clonados en el mismo filesystem con rutas relativas estables.
 2. **Script de sync/install idempotente.** Un script (`sync-skills`) recorre
    el repo central y crea/actualiza symlinks o copias en
    `~/.claude/skills/`, `~/.codex/skills/`, etc. Corre manualmente o por hook.
@@ -152,7 +152,7 @@ resuelto por su tooling.
 
 | Repo | Mecanismo |
 |---|---|
-| **steipete/agent-scripts** | Symlink tracked en git desde el repo central hacia la ubicación canónica en el otro repo (ej. `skills/discrawl -> ../../discrawl/.agents/skills/discrawl`), asumiendo que ambos repos están clonados como hermanos en el filesystem con una ruta relativa estable. `sync-skills` los descubre igual que a las skills propias. |
+| **steipete/agent-scripts** | Symlink tracked en git desde el repo central hacia la ubicación canónica en el otro repo (ej. `skills/discrawl -> ../../discrawl/skills/discrawl`), asumiendo que ambos repos están clonados como hermanos en el filesystem con una ruta relativa estable. `sync-skills` los descubre igual que a las skills propias. |
 | **addyosmani/agent-skills** | No es un caso contemplado en su modelo — está diseñado para ser instalado *desde* un repo de skills hacia proyectos consumidores, no para agregar fuentes externas dispersas hacia adentro del propio repo de skills. |
 
 **Diferencia clave:** este es exactamente el caso 1 que planteaste al

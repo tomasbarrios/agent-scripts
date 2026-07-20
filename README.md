@@ -9,8 +9,9 @@ OpenCode). Fuente de verdad única; los proyectos apuntan acá.
 - [`rules/`](rules/) — reglas consolidadas, una por archivo. Índice en su README.
 - [`rules/reforzar.md`](rules/reforzar.md) — reglas que quiero adquirir;
   **peso alto**: los agentes las aplican activamente y me corrigen.
-- [`skills/`](skills/) — skills centralizadas; los consumidores las enlazan
-  por symlink.
+- [`skills/`](skills/) — skills centralizadas (fuente de verdad); los
+  consumidores las enlazan por symlink (`~/.cursor/skills/`, etc.).
+  No usar `.agents/skills/` en este repo.
 - [`docs/`](docs/) — proceso de construcción de este repo:
   [`candidates.md`](docs/candidates.md) (pipeline candidato → centralizado),
   [`plan-primeros-pasos.md`](docs/plan-primeros-pasos.md) (plan vigente),
