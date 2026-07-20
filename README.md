@@ -10,8 +10,9 @@ OpenCode). Fuente de verdad única; los proyectos apuntan acá.
 - [`rules/reforzar.md`](rules/reforzar.md) — reglas que quiero adquirir;
   **peso alto**: los agentes las aplican activamente y me corrigen.
 - [`skills/`](skills/) — skills centralizadas (fuente de verdad); los
-  consumidores las enlazan por symlink (`~/.cursor/skills/`, etc.).
-  No usar `.agents/skills/` en este repo.
+  consumidores las enlazan por symlink (`~/.cursor/skills/`, `~/.bb/skills/`,
+  `~/.hermes/skills/`). No usar `.agents/skills/` en este repo.
+  Para enlazarlas a Hermes: [`docs/skills-hermes.md`](docs/skills-hermes.md).
 - [`docs/`](docs/) — proceso de construcción de este repo:
   [`candidates.md`](docs/candidates.md) (pipeline candidato → centralizado),
   [`plan-primeros-pasos.md`](docs/plan-primeros-pasos.md) (plan vigente),
