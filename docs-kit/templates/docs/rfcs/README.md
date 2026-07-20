@@ -8,7 +8,7 @@ Propuestas de **approach técnico** elaboradas: contexto, opciones, tradeoffs y 
 |------|--------|
 | Approach por capacidad (o transversal de impacto) | **Esta carpeta** |
 | Mapa / forma del sistema (etapas transversales) | [`../architecture/exploration/`](../architecture/exploration/) |
-| Patrón ya usado en el codebase | [`../architecture/vigente/`](../architecture/vigente/) |
+| Patrón ya usado en el codebase | [`../architecture/current/`](../architecture/current/) |
 | Lock-in o estándar de proyecto | [`../ADRs/`](../ADRs/) |
 | Convención operativa recurrente | [`../devs/`](../devs/) |
 | UX conceptual (sin implementación) | [`../design/`](../design/) |
@@ -26,7 +26,7 @@ Propuestas de **approach técnico** elaboradas: contexto, opciones, tradeoffs y 
 | `implementado` | Vive en el codebase; el RFC queda como historial |
 | `supersedido` | Otro RFC o ADR lo reemplazó |
 
-Al pasar a `implementado`: documentar el patrón en `architecture/vigente/` si es durable; ADR solo si hay lock-in; **no borrar** el RFC.
+Al pasar a `implementado`: documentar el patrón en `architecture/current/` si es durable; ADR solo si hay lock-in; **no borrar** el RFC.
 
 ## Naming
 

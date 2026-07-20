@@ -21,7 +21,7 @@ Referencia de producción: `doterra/mvp/docs/` (mismo método, con contenido de 
 | `domain/` | ¿Cómo funciona el **mundo externo** (negocio, proveedor, reglas reales)? |
 | `rfcs/` | ¿Cómo lo **modelamos nosotros** (approach técnico)? |
 | `design/` | ¿Qué ve / siente el usuario? (sin código) |
-| `architecture/vigente/` | ¿Qué patrón **usa el código hoy**? |
+| `architecture/current/` | ¿Qué patrón **usa el código hoy**? |
 | `architecture/exploration/` | ¿Cómo evoluciona la **forma del sistema** (mapa)? |
 | `ADRs/` | ¿Qué quedó **oficial y difícil de revertir**? |
 | `ROADMAP.md` | ¿Qué vamos a **ejecutar sí o sí**? |

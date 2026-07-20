@@ -4,7 +4,7 @@ Carpeta **conceptual**: problema, tono, copy, mockups. No define estándares de 
 
 ## Reglas
 
-1. **Sin implementación.** No snippets, nombres de componente, rutas de codebase. Approach → [`../rfcs/`](../rfcs/); patrón en uso → [`../architecture/vigente/`](../architecture/vigente/); convención → [`../devs/`](../devs/).
+1. **Sin implementación.** No snippets, nombres de componente, rutas de codebase. Approach → [`../rfcs/`](../rfcs/); patrón en uso → [`../architecture/current/`](../architecture/current/); convención → [`../devs/`](../devs/).
 2. **Vocabulario de audiencia**, no de código.
 3. **Dominio sí, código no.** Reglas de negocio se citan desde [`../domain/`](../domain/).
 4. **Mockups ≠ spec.**
@@ -15,7 +15,7 @@ Carpeta **conceptual**: problema, tono, copy, mockups. No define estándares de 
 | Pregunta | Carpeta |
 |----------|---------|
 | ¿Decisión oficial? | `ADRs/` |
-| ¿Cómo está montado hoy? | `architecture/vigente/` |
+| ¿Cómo está montado hoy? | `architecture/current/` |
 | ¿Reglas del mundo externo? | `domain/` |
 | ¿Approach técnico? | `rfcs/` |
 | ¿Qué ejecutamos? | `ROADMAP.md` |

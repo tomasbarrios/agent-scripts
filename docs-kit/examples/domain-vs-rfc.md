@@ -23,4 +23,4 @@ Trade-off: armar a mano los ítems sin el SKU de oferta es otro flujo.
 ## Test rápido
 
 Si borras el nombre de tu app del párrafo y sigue siendo verdad en el mundo real → **domain**.  
-Si solo tiene sentido dentro de tu código/UX → **RFC** (o design/vigente).
+Si solo tiene sentido dentro de tu código/UX → **RFC** (o `architecture/current`).

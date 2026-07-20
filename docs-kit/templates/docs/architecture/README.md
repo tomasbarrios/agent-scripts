@@ -6,7 +6,7 @@ Forma del sistema y patrones. Las propuestas de approach por capacidad viven en 
 
 | Subcarpeta | Pregunta | Naturaleza |
 |------------|----------|------------|
-| [`vigente/`](vigente/) | ¿Qué patrón **usa el codebase hoy**? | Referencia para mantener código |
+| [`current/`](current/) | ¿Qué patrón **usa el codebase hoy**? | Referencia para mantener código |
 | [`exploration/`](exploration/) | ¿Cómo **evoluciona la forma del sistema**? | Mapa sin compromiso; no normativo |
 
 ## Promoción
@@ -17,14 +17,14 @@ flowchart LR
   exploration[exploration mapa]
   roadmap[ROADMAP]
   code[codebase]
-  vigente[vigente]
+  current[current]
   rfcs --> roadmap
   exploration --> roadmap
   roadmap --> code
-  code --> vigente
+  code --> current
 ```
 
 1. Approach en `rfcs/` (o mapa en `exploration/`).
-2. ROADMAP → implementación → documentar en `vigente/`.
+2. ROADMAP → implementación → documentar en `current/`.
 3. RFC → estado `implementado` (historial).
 4. Lock-in → ADR.
