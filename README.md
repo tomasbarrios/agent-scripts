@@ -13,6 +13,9 @@ OpenCode). Fuente de verdad única; los proyectos apuntan acá.
   consumidores las enlazan por symlink (`~/.cursor/skills/`, `~/.bb/skills/`,
   `~/.hermes/skills/`). No usar `.agents/skills/` en este repo.
   Para enlazarlas a Hermes: [`docs/skills-hermes.md`](docs/skills-hermes.md).
+- [`docs/instalar-reglas.md`](docs/instalar-reglas.md) — **cómo instalar
+  reglas en un proyecto**: propagar el puntero a este repo (estrategia
+  steipete), no copiar contenido.
 - [`docs/`](docs/) — proceso de construcción de este repo:
   [`candidates.md`](docs/candidates.md) (pipeline candidato → centralizado),
   [`plan-primeros-pasos.md`](docs/plan-primeros-pasos.md) (plan vigente),
