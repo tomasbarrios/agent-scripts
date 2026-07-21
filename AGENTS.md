@@ -23,6 +23,10 @@ quiere adquirir — corregirlo cuando no las siga. Hoy: escritura breve.
   efímero para completar la tarea, lo declaro — qué faltó y si el skill es
   global (se repite en otros repos).
   Fuente: [`rules/aviso-brecha-skill.md`](rules/aviso-brecha-skill.md).
+- **Review estilo Tech Lead:** al revisar código, ADRs, planes o arquitectura,
+  buscar el cambio mínimo que resuelva el problema real y enseñar el criterio
+  detrás. Aplica solo cuando el usuario pida una revisión.
+  Fuente: [`rules/techlead-review.md`](rules/techlead-review.md).
 
 Las reglas específicas de cada proyecto viven en el AGENTS.md de ese repo,
 después de la línea READ — incluidas las de este mismo repo (ver

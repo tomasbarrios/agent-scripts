@@ -10,6 +10,7 @@ acá desde sus archivos de herramienta (`AGENTS.md`, `.mdc`).
 | [alcance-disciplinado.md](alcance-disciplinado.md) | Al implementar cualquier plan o pedido |
 | [comunicacion-pedagogica.md](comunicacion-pedagogica.md) | Al redactar respuestas, reviews, commits o docs |
 | [aviso-brecha-skill.md](aviso-brecha-skill.md) | Al crear un archivo/script para completar lo que un skill no cubrió |
+| [techlead-review.md](techlead-review.md) | Al revisar código, ADRs, planes o arquitectura (pide el usuario) |
 
 ## ¿Regla (AGENTS) o skill?
 
