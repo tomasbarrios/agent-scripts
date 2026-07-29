@@ -1,7 +1,8 @@
 # Review estilo Tech Lead
 
 **Regla:** al revisar código, ADRs, planes o arquitectura, buscar el cambio
-más pequeño que resuelva el problema real y enseñar el criterio detrás.
+más pequeño que resuelva el problema real, cuidar que el código sea
+entendible (sweet spot vía trade-offs) y enseñar el criterio detrás.
 Aplicar **solo cuando el usuario pida revisar** código, un ADR, un plan o
 una decisión de arquitectura — no en cada mensaje.
 
@@ -28,19 +29,27 @@ una decisión de arquitectura — no en cada mensaje.
    sugerir extraerla a un módulo reutilizable con nombre de dominio o
    presentación claro. Severidad: **recomendada** (no bloqueante si el
    duplicado es trivial y local). No inventar un "utils kitchen sink".
+7. **Mantenibilidad y sweet spot.** Priorizar que el código sea entendible
+   para quien lo herede. Explicitar trade-offs y recomendar el sweet spot:
+   ni over-engineering ni "clever" opaco.
 
 ## Cómo comunicar
 
 Por cada sugerencia, declarar por separado:
 
 1. **Hallazgo:** qué se observó, con evidencia concreta (archivo/línea).
-2. **Criterio aplicado:** cuál de los 6 fundamenta la sugerencia.
+2. **Criterio aplicado:** cuál de los 7 fundamenta la sugerencia.
 3. **Impacto:** qué riesgo, costo o complejidad evita.
 4. **Recomendación:** el cambio mínimo y concreto.
 
+- **Complejidad con dirección:** si proponés simplificar o priorizar
+  mantenibilidad, declarás a dónde se mueve la complejidad, el impacto
+  de ese movimiento, y un ejemplo concreto para el equipo — no alcanza
+  con nombrarla.
 - **Severidad:** bloqueante si afecta corrección o datos; recomendada si
-  reduce complejidad presente; opcional si solo mejora legibilidad. Lo
-  opcional se propone, no entra al diff sin aprobación.
+  reduce complejidad presente o corrige opacidad / complejidad mal ubicada;
+  opcional si solo mejora estilo superficial. Lo opcional se propone, no
+  entra al diff sin aprobación.
 - **Honesto y pedagógico:** explicar el porqué, no solo el veredicto. Si la
   solución no convence, proponer una alternativa concreta (snippet/estructura).
 - **Antes / Después / Por qué** cuando el cambio tenga valor de aprendizaje.
@@ -56,16 +65,23 @@ Por cada sugerencia, declarar por separado:
 - Un ADR que justifica un cambio pequeño con arquitectura grande.
 - Documentación que trata una exploración como decisión tomada.
 - La misma función pura copiada en 2+ módulos en vez de un export compartido.
+- "Clever" opaco que no se entiende sin contexto oral.
+- Sugerencia de simplificar o priorizar mantenibilidad sin decir a dónde va
+  la complejidad ni con ejemplo concreto.
 
 ## Por qué
 
-Una review no es solo aprobar/rechazar: protege la simplicidad del proyecto y
-deja al autor un criterio reutilizable. El formato Hallazgo/Criterio/Impacto/
-Recomendación obliga a fundamentar cada sugerencia, evita listas genéricas y
-hace que cada punto se pueda aceptar o rechazar por separado.
+Una review no es solo aprobar/rechazar: protege la simplicidad y la
+mantenibilidad del proyecto (el sweet spot vía trade-offs) y deja al autor
+un criterio reutilizable. El formato Hallazgo/Criterio/Impacto/Recomendación
+obliga a fundamentar cada sugerencia, evita listas genéricas y hace que cada
+punto se pueda aceptar o rechazar por separado. Explicar a dónde se mueve la
+complejidad con un ejemplo concreto hace que el equipo internalice el
+trade-off, no solo el veredicto.
 
 ## Origen
 
 Extraída de `pasoesencial-cotizador/.cursor/rules/techlead-review.mdc` y
 `mvp/docs/devs/review-techlead.md` (2026-07-20), desacoplada del dominio
-cotizador/MVP para ser agnóstica de repo.
+cotizador/MVP para ser agnóstica de repo. Criterio 7 (mantenibilidad /
+sweet spot + complejidad con dirección) añadido 2026-07-22.
