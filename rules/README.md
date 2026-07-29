@@ -11,6 +11,7 @@ acá desde sus archivos de herramienta (`AGENTS.md`, `.mdc`).
 | [comunicacion-pedagogica.md](comunicacion-pedagogica.md) | Al redactar respuestas, reviews, commits o docs |
 | [aviso-brecha-skill.md](aviso-brecha-skill.md) | Al crear un archivo/script para completar lo que un skill no cubrió |
 | [autoria-de-ideas.md](autoria-de-ideas.md) | Al listar ideas, propuestas o alternativas junto a las del usuario |
+| [escalera-de-exploracion.md](escalera-de-exploracion.md) | Ante un objetivo ambicioso de forma incierta, antes de construir |
 | [techlead-review.md](techlead-review.md) | Al revisar código, ADRs, planes o arquitectura (pide el usuario) |
 | [reglas-globales.md](reglas-globales.md) | Antes de crear/modificar una regla o método que deba aplicar a más de un repo |
 

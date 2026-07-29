@@ -27,6 +27,11 @@ quiere adquirir — corregirlo cuando no las siga. Hoy: escritura breve.
   sin preguntar antes; cuando conviven, marcar siempre quién aporta cada
   una (`Tomás` / `agente`).
   Fuente: [`rules/autoria-de-ideas.md`](rules/autoria-de-ideas.md).
+- **Escalera de exploración:** ante un objetivo **ambicioso** de forma
+  incierta, no construir directo: proponer una escalera de escalones chicos
+  que componen sobre un cimiento, cada uno con su pregunta de feedback, y
+  **consultarla antes de construir**. No aplica a trabajo de forma conocida.
+  Fuente: [`rules/escalera-de-exploracion.md`](rules/escalera-de-exploracion.md).
 - **Review estilo Tech Lead:** al revisar código, ADRs, planes o arquitectura,
   buscar el cambio mínimo, cuidar entendibilidad (sweet spot vía trade-offs)
   y enseñar el criterio — con ejemplos de a dónde se mueve la complejidad.
