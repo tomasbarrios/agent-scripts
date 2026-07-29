@@ -8,9 +8,10 @@ qué le faltó, y si el skill es global (se repetirá en otros repos).
 
 1. **Declarar el parche.** Antes de seguir, decir qué skill se invocó y qué
    parte de la tarea no cubrió — no crear el archivo de relleno en silencio.
-2. **Distinguir alcance del skill.** Si vive en `~/.bb/skills` o similar
-   (global, todos los repos) marcarlo así; si es local a un repo
-   (`<repo>/.claude/skills`), decirlo también.
+2. **Distinguir alcance del skill.** Si es global —vive en `skills/` de
+   agent-scripts o en el directorio de skills del cliente de agente, y por
+   lo tanto aplica a todos los repos— marcarlo así; si es local a un repo
+   (`<repo>/.claude/skills` o equivalente), decirlo también.
 3. **Si es global, señalar la brecha como recurrente.** Un hueco en un skill
    global probablemente se repite en cualquier otro repo con la misma forma
    de problema (ej. app viva con lógica propia vs. HTML estático) — no basta

@@ -5,8 +5,8 @@
 Las skills viven como **fuente de verdad única** en `skills/` de este repo
 (versionadas en git). En vez de copiarlas a `~/.hermes/skills/`, Hermes las
 lee por symlink: editás en un lado, se refleja en el otro, y no se
-desincronizan. Es la misma estrategia steipete que usan `~/.cursor/skills/`
-y `~/.bb/skills/`.
+desincronizan. Es la misma estrategia steipete que se usa con cualquier otro
+cliente de agente: el directorio de skills del cliente apunta acá.
 
 El symlink debe ser **absoluto** (`/home/tomas/...`) para no romperse si se
 ejecuta desde otro directorio.
@@ -19,13 +19,15 @@ ejecuta desde otro directorio.
 | `idea-refine` | Refina una idea vaga en concepto accionable (divergente → convergente), con sesión de ideación y un one-pager. | `AskUserQuestion`, `Glob`/`Grep`/`Read` | ⚠️ parcial — las preguntas van por `clarify` |
 | `product-expert-definition-of-ready` | Evalúa un cambio de producto en 4 dimensiones (narrativa, conductual, copy, framing) ponderadas por momento del journey. | Ninguna específica — puro razonamiento + plantilla en `assets/` | ✅ lista tal cual |
 | `orchestrate-opencode` | Plan en Sonnet, ejecución mecánica en modelos gratis de OpenCode vía CLI `bb`. | CLI `bb` + provider `acp-opencode` | ⚠️ requiere `bb` instalado y el provider disponible |
+| `voz-tomas` | Ajusta tono/vocabulario para que un texto suene a como habla Tomás (no define narrativa ni contenido). | Ninguna específica — puro razonamiento + `ejemplos.md` para aprender por casos | ✅ lista tal cual |
+| `css-debug-explain-solve-and-suggest` | Diagnostica y resuelve bugs de CSS/layout en 4 fases (causa raíz → explicación → intervención mínima → mejores opciones). | Ninguna específica — puro razonamiento + navegación del código | ✅ lista tal cual |
 
 ## Cómo habilitar (symlink absoluto)
 
 ```bash
 SRC=/home/tomas/Projects/agent-scripts/skills
 DST=/home/tomas/.hermes/skills
-for s in interview-me idea-refine product-expert-definition-of-ready orchestrate-opencode; do
+for s in interview-me idea-refine product-expert-definition-of-ready orchestrate-opencode voz-tomas css-debug-explain-solve-and-suggest; do
   ln -s "$SRC/$s" "$DST/$s"
 done
 ```
@@ -47,7 +49,7 @@ Para quitar una: `rm /home/tomas/.hermes/skills/<nombre>`.
 Después de crear los symlinks, confirmá que Hermes los ve:
 
 ```bash
-hermes skills list | grep -E "interview-me|idea-refine|product-expert|orchestrate-opencode"
+hermes skills list | grep -E "interview-me|idea-refine|product-expert|orchestrate-opencode|voz-tomas|css-debug"
 ```
 
 Si no aparecen, Hermes puede requerir reinicio de sesión o registro en el

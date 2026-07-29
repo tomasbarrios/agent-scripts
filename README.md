@@ -9,10 +9,10 @@ OpenCode). Fuente de verdad única; los proyectos apuntan acá.
 - [`rules/`](rules/) — reglas consolidadas, una por archivo. Índice en su README.
 - [`rules/reforzar.md`](rules/reforzar.md) — reglas que quiero adquirir;
   **peso alto**: los agentes las aplican activamente y me corrigen.
-- [`skills/`](skills/) — skills centralizadas (fuente de verdad); los
-  consumidores las enlazan por symlink (`~/.cursor/skills/`, `~/.bb/skills/`,
-  `~/.hermes/skills/`). No usar `.agents/skills/` en este repo.
-  Para enlazarlas a Hermes: [`docs/skills-hermes.md`](docs/skills-hermes.md).
+- [`skills/`](skills/) — skills centralizadas (fuente de verdad); cada
+  cliente de agente las enlaza por symlink desde su propio directorio de
+  skills. No usar `.agents/skills/` en este repo.
+  Ejemplo de enlazado: [`docs/skills-hermes.md`](docs/skills-hermes.md).
 - [`docs/instalar-reglas.md`](docs/instalar-reglas.md) — **cómo instalar
   reglas en un proyecto**: propagar el puntero a este repo (estrategia
   steipete), no copiar contenido.
