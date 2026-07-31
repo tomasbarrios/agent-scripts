@@ -18,10 +18,9 @@ ejecuta desde otro directorio.
 | `interview-me` | Entrevista de **una pregunta a la vez** con una hipótesis adjunta, hasta ~95% de confianza sobre lo que querés de verdad (no lo que creés que deberías querer). | `AskUserQuestion` (Claude Code) → en Hermes usamos `clarify`. | ⚠️ el método sirve; el paso de preguntas hay que hacerlo con `clarify` |
 | `idea-refine` | Refina una idea vaga en concepto accionable (divergente → convergente), con sesión de ideación y un one-pager. | `AskUserQuestion`, `Glob`/`Grep`/`Read` | ⚠️ parcial — las preguntas van por `clarify` |
 | `product-expert-definition-of-ready` | Evalúa un cambio de producto en 4 dimensiones (narrativa, conductual, copy, framing) ponderadas por momento del journey. | Ninguna específica — puro razonamiento + plantilla en `assets/` | ✅ lista tal cual |
-| `orchestrate-opencode` | Plan en Sonnet, ejecución mecánica en modelos gratis de OpenCode vía CLI `bb`. | CLI `bb` + provider `acp-opencode` | ⚠️ requiere `bb` instalado y el provider disponible |
 | `voz-tomas` | Ajusta tono/vocabulario para que un texto suene a como habla Tomás (no define narrativa ni contenido). | Ninguna específica — puro razonamiento + `ejemplos.md` para aprender por casos | ✅ lista tal cual |
 | `css-debug-explain-solve-and-suggest` | Diagnostica y resuelve bugs de CSS/layout en 4 fases (causa raíz → explicación → intervención mínima → mejores opciones). | Ninguna específica — puro razonamiento + navegación del código | ✅ lista tal cual |
-| `speech-to-text` | Transcribe un archivo de audio de conversación usando whisper. | `whisper` instalado localmente | ⚠️ requiere `whisper` disponible en el entorno de Hermes |
+| `speech-to-text` | Transcribe un archivo de audio de conversación; pregunta primero si hace falta distinguir hablantes (diarización). | `whisper`; `whisperx` + `HF_TOKEN` si hay diarización | ⚠️ requiere `whisper`/`whisperx` disponibles en el entorno de Hermes |
 | `wayfinder` | Planifica un trabajo grande que no cabe en una sesión: un "mapa" con tickets de **decisión** que se resuelven de a uno hasta que el camino está claro. Planifica, no ejecuta. | Ninguna específica — escribe markdown en `.scratch/` del repo. Externa (mattpocock), ver procedencia en su `SKILL.md`. | ✅ lista tal cual (se invoca a mano: `disable-model-invocation`) |
 
 ## Cómo habilitar (symlink absoluto)
@@ -29,7 +28,7 @@ ejecuta desde otro directorio.
 ```bash
 SRC=/home/tomas/Projects/agent-scripts/skills
 DST=/home/tomas/.hermes/skills
-for s in interview-me idea-refine product-expert-definition-of-ready orchestrate-opencode voz-tomas css-debug-explain-solve-and-suggest speech-to-text wayfinder; do
+for s in interview-me idea-refine product-expert-definition-of-ready voz-tomas css-debug-explain-solve-and-suggest speech-to-text wayfinder; do
   ln -s "$SRC/$s" "$DST/$s"
 done
 ```
@@ -41,8 +40,8 @@ Para quitar una: `rm /home/tomas/.hermes/skills/<nombre>`.
 - `interview-me` e `idea-refine` mencionan `AskUserQuestion` y herramientas de
   Claude Code. En Hermes la pregunta *one-at-a-time* se hace con la tool
   `clarify`; el resto del método es aplicable sin cambios.
-- `orchestrate-opencode` depende del CLI `bb` y del provider `acp-opencode`;
-  sin eso no ejecuta la fase de ejecución en paralelo.
+- `speech-to-text` asume binarios locales (`whisper`, y `whisperx` para
+  diarización, que además necesita `HF_TOKEN`); sin ellos no transcribe.
 - `product-expert-definition-of-ready` es agnóstico: solo razonamiento + la
   plantilla en `assets/plantilla.md` y la guía en `references/guia-explicativa.md`.
 
@@ -51,7 +50,7 @@ Para quitar una: `rm /home/tomas/.hermes/skills/<nombre>`.
 Después de crear los symlinks, confirmá que Hermes los ve:
 
 ```bash
-hermes skills list | grep -E "interview-me|idea-refine|product-expert|orchestrate-opencode|voz-tomas|css-debug|speech-to-text|wayfinder"
+hermes skills list | grep -E "interview-me|idea-refine|product-expert|voz-tomas|css-debug|speech-to-text|wayfinder"
 ```
 
 Si no aparecen, Hermes puede requerir reinicio de sesión o registro en el
