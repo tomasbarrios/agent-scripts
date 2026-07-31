@@ -11,7 +11,7 @@ Recibe la descripción de un problema de CSS (idealmente: qué vista, qué se ve
 
 No diagnostiques solo leyendo el código fuente: reproduce el problema en un navegador real.
 
-1. Levanta la app (busca cómo en los docs/scripts del repo) y navega a la vista afectada, con el viewport que corresponda (móvil si el reporte es móvil).
+1. Antes de levantar nada, revisa si ya hay un servidor corriendo (puerto típico del repo, `lsof -i`, o pregunta al usuario) — si lo hay, navégalo directamente en vez de levantar una instancia nueva. Solo si no hay ninguno, levanta la app (busca cómo en los docs/scripts del repo). Navega a la vista afectada, con el viewport que corresponda (móvil si el reporte es móvil).
 2. Inspecciona el DOM computado: encuentra el/los elementos cuyo ancho/alto/posición rompe el layout. Técnica útil para overflow horizontal: recorrer elementos comparando `el.scrollWidth`/`el.getBoundingClientRect()` contra el viewport para encontrar al culpable exacto, o inyectar `* { outline: 1px solid red }` temporalmente.
 3. Rastrea la causa en CSS: qué regla, de qué archivo/clase, y por qué produce el comportamiento (ej. `width: 100vw` + scrollbar, padding que se suma por `box-sizing: content-box`, hijo con `white-space: nowrap`, flex item sin `min-width: 0`, imagen sin `max-width`, margen negativo, etc.).
 
