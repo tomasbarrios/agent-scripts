@@ -14,6 +14,7 @@ acá desde sus archivos de herramienta (`AGENTS.md`, `.mdc`).
 | [escalera-de-exploracion.md](escalera-de-exploracion.md) | Ante un objetivo ambicioso de forma incierta, antes de construir |
 | [techlead-review.md](techlead-review.md) | Al revisar código, ADRs, planes o arquitectura (pide el usuario) |
 | [reglas-globales.md](reglas-globales.md) | Antes de crear/modificar una regla o método que deba aplicar a más de un repo |
+| [fuentes-externas-de-skills.md](fuentes-externas-de-skills.md) | Al pedir instalar una skill: dónde buscarla y por qué requiere aprobación |
 
 ## ¿Regla (AGENTS) o skill?
 

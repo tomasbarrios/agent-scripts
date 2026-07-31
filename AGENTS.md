@@ -37,6 +37,12 @@ quiere adquirir — corregirlo cuando no las siga. Hoy: escritura breve.
   y enseñar el criterio — con ejemplos de a dónde se mueve la complejidad.
   Aplica solo cuando el usuario pida una revisión.
   Fuente: [`rules/techlead-review.md`](rules/techlead-review.md).
+- **Fuentes externas de skills:** al pedir instalar una skill, se puede
+  buscar en los clones hermanos declarados (`../agent-scripts-stein`,
+  `../agent-skills-addy`, `../mattpocock-skills`), pero **no se instala nada
+  sin aprobación explícita**: primero reportar qué se encontró y proponer
+  modo (symlink vs copia), después instalar dejando procedencia.
+  Fuente: [`rules/fuentes-externas-de-skills.md`](rules/fuentes-externas-de-skills.md).
 - **Reglas globales → agent-scripts:** si una regla o método debe aplicar a
   más de un repo, **consultar** antes de crearla o modificarla aquí (no
   cerrarla solo en el repo de producto). Incluye cambios de taxonomía en
