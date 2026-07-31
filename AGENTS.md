@@ -10,6 +10,11 @@ quiere adquirir — corregirlo cuando no las siga. Hoy: escritura breve.
 
 ## Reglas
 
+- **Idioma español chileno:** responder siempre en español chileno, aunque
+  el contexto (código, docs, prompts) esté en inglés. Lenguaje normal y
+  bien escrito — sin modismos, apócopes ni voseo; términos técnicos se
+  dejan en inglés.
+  Fuente: [`rules/idioma-espanol-chileno.md`](rules/idioma-espanol-chileno.md).
 - **Alcance disciplinado:** solo lo aprobado; sin infraestructura
   especulativa; no salir del repo sin aprobación.
   Fuente: [`rules/alcance-disciplinado.md`](rules/alcance-disciplinado.md).
