@@ -21,6 +21,7 @@ ejecuta desde otro directorio.
 | `orchestrate-opencode` | Plan en Sonnet, ejecución mecánica en modelos gratis de OpenCode vía CLI `bb`. | CLI `bb` + provider `acp-opencode` | ⚠️ requiere `bb` instalado y el provider disponible |
 | `voz-tomas` | Ajusta tono/vocabulario para que un texto suene a como habla Tomás (no define narrativa ni contenido). | Ninguna específica — puro razonamiento + `ejemplos.md` para aprender por casos | ✅ lista tal cual |
 | `css-debug-explain-solve-and-suggest` | Diagnostica y resuelve bugs de CSS/layout en 4 fases (causa raíz → explicación → intervención mínima → mejores opciones). | Ninguna específica — puro razonamiento + navegación del código | ✅ lista tal cual |
+| `speech-to-text` | Transcribe un archivo de audio de conversación usando whisper. | `whisper` instalado localmente | ⚠️ requiere `whisper` disponible en el entorno de Hermes |
 | `wayfinder` | Planifica un trabajo grande que no cabe en una sesión: un "mapa" con tickets de **decisión** que se resuelven de a uno hasta que el camino está claro. Planifica, no ejecuta. | Ninguna específica — escribe markdown en `.scratch/` del repo. Externa (mattpocock), ver procedencia en su `SKILL.md`. | ✅ lista tal cual (se invoca a mano: `disable-model-invocation`) |
 
 ## Cómo habilitar (symlink absoluto)
@@ -28,7 +29,7 @@ ejecuta desde otro directorio.
 ```bash
 SRC=/home/tomas/Projects/agent-scripts/skills
 DST=/home/tomas/.hermes/skills
-for s in interview-me idea-refine product-expert-definition-of-ready orchestrate-opencode voz-tomas css-debug-explain-solve-and-suggest wayfinder; do
+for s in interview-me idea-refine product-expert-definition-of-ready orchestrate-opencode voz-tomas css-debug-explain-solve-and-suggest speech-to-text wayfinder; do
   ln -s "$SRC/$s" "$DST/$s"
 done
 ```
@@ -50,7 +51,7 @@ Para quitar una: `rm /home/tomas/.hermes/skills/<nombre>`.
 Después de crear los symlinks, confirmá que Hermes los ve:
 
 ```bash
-hermes skills list | grep -E "interview-me|idea-refine|product-expert|orchestrate-opencode|voz-tomas|css-debug|wayfinder"
+hermes skills list | grep -E "interview-me|idea-refine|product-expert|orchestrate-opencode|voz-tomas|css-debug|speech-to-text|wayfinder"
 ```
 
 Si no aparecen, Hermes puede requerir reinicio de sesión o registro en el

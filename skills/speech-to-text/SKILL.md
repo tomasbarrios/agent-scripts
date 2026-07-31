@@ -1,0 +1,4 @@
+Cuando se te pase un archivo de audio, y el contexto indique que hay una conversacion, pregunta primero si se necesita distinguir quién habla (diarización de speakers).
+
+- Si no se necesita distinguir hablantes: transcribe usando whisper.
+- Si se necesita distinguir hablantes: transcribe usando whisperx (requiere token de HuggingFace para el modelo de diarización de pyannote). El token vive en `~/.config/whisperx/.env` (HF_TOKEN) — cárgalo con `source ~/.config/whisperx/.env` antes de invocar whisperx. Si el archivo no existe o no tiene HF_TOKEN, pide el secreto con `bb secret request HF_TOKEN --write-env ~/.config/whisperx/.env` en vez de preguntarle al usuario el valor.
