@@ -1,9 +1,9 @@
-# docs-kit v0.1.0
+# docs-kit v0.2.0
 
 Paquete portable: **cómo organizar docs** (taxonomía carpeta ↔ tipo de pregunta).
 
 Fuente viva: este directorio en [`agent-scripts`](../README.md).  
-Referencia de producción: `doterra/mvp/docs/` (mismo método, con contenido de producto).
+Referencia de producción: `doterra/mvp/docs/` (mismo método, con contenido de producto; puede ir versiones atrás hasta migrar).
 
 ## Qué incluye
 
@@ -32,9 +32,9 @@ Referencia de producción: `doterra/mvp/docs/` (mismo método, con contenido de 
 
 ## Sync entre proyectos
 
-1. El kit vive en `agent-scripts` (o el remote que uses).
-2. Cada proyecto declara en su `docs/README.md`: `docs-kit: vX.Y.Z`.
-3. Al cambiar el método, subes versión del kit y actualizas consumidores a mano (sin magia).
+1. El kit vive en `agent-scripts`.
+2. Cada proyecto declara `docs-kit: vX.Y.Z` en su `docs/README.md`.
+3. Cambios de **método** → primero este kit (regla global: [`../rules/reglas-globales.md`](../rules/reglas-globales.md)); bump VERSION; luego migran consumidores. Sin magia.
 
 ## Origen
 

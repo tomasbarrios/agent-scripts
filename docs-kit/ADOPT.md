@@ -52,7 +52,19 @@ Antes de crear un `.md` en docs/: clasificar con la tabla de `docs/README.md`
 
 - No impone MIW, git flow ni stack UI (eso es por proyecto / ADR).
 - No sustituye el contenido: solo la **forma** de organizar.
-- No auto-sincroniza: al subir `VERSION`, actualiza a mano el proyecto.
+- No auto-sincroniza: al subir `VERSION`, actualizas a mano cada proyecto.
+
+## Cambios al método
+
+El método es **global**: no se cierra solo en un repo de producto. Regla:
+[`../rules/reglas-globales.md`](../rules/reglas-globales.md).
+
+1. Consultar / editar **aquí** (`docs-kit/`).
+2. Bump `VERSION` + `CHANGELOG.md`.
+3. Commit/push `agent-scripts`.
+4. Cada consumidor migra y actualiza `docs-kit: v…` en su README.
+
+**Anti-patrón:** renombrar carpetas canónicas solo en doterra (u otro) y esperar que el kit se entere.
 
 ## Verificar adopción
 
@@ -60,4 +72,5 @@ Antes de crear un `.md` en docs/: clasificar con la tabla de `docs/README.md`
 - [ ] Existe `docs/rfcs/README.md` con estados
 - [ ] `domain/` no menciona alcance MVP / implementación
 - [ ] Hay al menos un par domain+RFC o el ejemplo adaptado
-- [ ] El README del proyecto declara `docs-kit: v…`
+- [ ] El README del proyecto declara `docs-kit: v…` alineado al método que realmente sigue
+
