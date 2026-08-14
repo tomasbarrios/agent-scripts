@@ -45,6 +45,25 @@ done
 Para quitar una: `rm $DST/<nombre>`. Para otro cliente, mismo patrón con su
 propio directorio de skills como `DST`.
 
+## Estado real instalado (verificado 2026-08-14)
+
+A diferencia del índice de arriba (qué existe y es portable), esta tabla
+dice qué symlink hay **de verdad** en cada cliente ahora mismo. Se
+desincroniza con el tiempo — verificar en disco antes de confiar en ella,
+no asumir.
+
+| Skill | `~/.claude/skills/` | `~/.hermes/skills/` | `~/.cursor/skills/` |
+|-------|:---:|:---:|:---:|
+| `interview-me` | ✅ | ✅ | — no symlinkeada |
+| `idea-refine` | ✅ | ✅ | — no symlinkeada |
+| `product-expert-definition-of-ready` | ✅ | ✅ | — no symlinkeada |
+| `product-designer-narrativa` | ✅ | ✅ | ✅ |
+| `css-debug-explain-solve-and-suggest` | ✅ | ✅ | ✅ |
+| `voz-tomas` | — no symlinkeada | — no symlinkeada | — no symlinkeada |
+| `speech-to-text` | — no symlinkeada | — no symlinkeada | — no symlinkeada |
+| `wayfinder` | — no symlinkeada | — no symlinkeada | — no symlinkeada |
+| `orchestrate` | — no symlinkeada | — no symlinkeada | — no symlinkeada |
+
 ## Verificación (ejemplo Hermes)
 
 ```bash
