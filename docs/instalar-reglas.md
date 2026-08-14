@@ -80,6 +80,6 @@ silenciosamente.
 ## Qué NO cubre esto
 
 - **Skills:** se instalan por symlink de directorio, no por línea puntero
-  (ver [`README.md`](../README.md) y [`skills-hermes.md`](skills-hermes.md)).
+  (ver [`README.md`](../README.md) y [`skills-catalogo.md`](skills-catalogo.md)).
 - Un script que automatice el paso 2 — no se justifica todavía; agregar la
   línea a mano toma segundos y ocurre pocas veces (una vez por proyecto).

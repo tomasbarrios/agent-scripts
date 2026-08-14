@@ -12,7 +12,7 @@ OpenCode). Fuente de verdad única; los proyectos apuntan acá.
 - [`skills/`](skills/) — skills centralizadas (fuente de verdad); cada
   cliente de agente las enlaza por symlink desde su propio directorio de
   skills. No usar `.agents/skills/` en este repo.
-  Ejemplo de enlazado: [`docs/skills-hermes.md`](docs/skills-hermes.md).
+  Ejemplo de enlazado: [`docs/skills-catalogo.md`](docs/skills-catalogo.md).
 - [`docs/instalar-reglas.md`](docs/instalar-reglas.md) — **cómo instalar
   reglas en un proyecto**: propagar el puntero a este repo (estrategia
   steipete), no copiar contenido.

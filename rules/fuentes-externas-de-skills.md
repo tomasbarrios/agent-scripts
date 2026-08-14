@@ -43,7 +43,7 @@ alcance, no un detalle de implementación — la toma Tomás.
 3. **Esperar aprobación explícita.** Sin OK, no se crea ni symlink ni copia.
 4. Al instalar, dejar **procedencia** en la skill: repo, ruta upstream,
    commit y fecha. Sin eso se pierde de dónde vino y qué se adaptó.
-5. Registrar la skill en el catálogo [`../docs/skills-hermes.md`](../docs/skills-hermes.md),
+5. Registrar la skill en el catálogo [`../docs/skills-catalogo.md`](../docs/skills-catalogo.md),
    con su nivel de portabilidad y notas por cliente si aplica.
 
 ## Anti-patrón
@@ -58,5 +58,5 @@ sistema global de Tomás — se propone, no se ejecuta.
   [`alcance-disciplinado.md`](alcance-disciplinado.md).
 - Cualquier skill nueva es global por definición —
   [`reglas-globales.md`](reglas-globales.md).
-- Distribución (symlink por cliente) — [`../docs/skills-hermes.md`](../docs/skills-hermes.md),
+- Distribución (symlink por cliente) — [`../docs/skills-catalogo.md`](../docs/skills-catalogo.md),
   comparativa de estrategias en [`../docs/design.md`](../docs/design.md) § 5.
