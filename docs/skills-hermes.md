@@ -1,57 +1,55 @@
-# Skills centralizadas → Hermes (vía symlink)
+# Catálogo de skills — portabilidad e instalación
 
-## Por qué symlink y no copiar
+## Por qué existe
 
-Las skills viven como **fuente de verdad única** en `skills/` de este repo
-(versionadas en git). En vez de copiarlas a `~/.hermes/skills/`, Hermes las
-lee por symlink: editás en un lado, se refleja en el otro, y no se
-desincronizan. Es la misma estrategia steipete que se usa con cualquier otro
-cliente de agente: el directorio de skills del cliente apunta acá.
+`skills/` en este repo es la **fuente de verdad única** de mis skills
+propias, versionadas en git. Este catálogo dice, para cada una, si es
+**agnóstica de cliente** (Claude Code, Hermes, o el que venga) o si asume
+herramientas/tools específicas — para decidir rápido si es instalable en
+otro lado tal cual o si necesita adaptación.
 
-El symlink debe ser **absoluto** (`/home/tomas/...`) para no romperse si se
-ejecuta desde otro directorio.
+## Índice de skills disponibles
 
-## Índice de skills disponibles (elegí cuál invocar)
+| Skill | Qué hace | Herramienta que asume | Portabilidad |
+|-------|----------|----------------------|--------------|
+| `interview-me` | Entrevista de **una pregunta a la vez** con una hipótesis adjunta, hasta ~95% de confianza sobre lo que querés de verdad (no lo que creés que deberías querer). | `AskUserQuestion` (Claude Code) → en Hermes usamos `clarify`. | ⚠️ el método sirve; el paso de preguntas hay que mapearlo a la tool equivalente del cliente |
+| `idea-refine` | Refina una idea vaga en concepto accionable (divergente → convergente), con sesión de ideación y un one-pager. | `AskUserQuestion`, `Glob`/`Grep`/`Read` | ⚠️ parcial — las preguntas van por la tool de clarificación del cliente |
+| `product-expert-definition-of-ready` | Evalúa un cambio de producto en 4 dimensiones (narrativa, conductual, copy, framing) ponderadas por momento del journey. | Ninguna específica — puro razonamiento + plantilla en `assets/` | ✅ agnóstica, lista tal cual |
+| `voz-tomas` | Ajusta tono/vocabulario para que un texto suene a como habla Tomás (no define narrativa ni contenido). | Ninguna específica — puro razonamiento + `ejemplos.md` para aprender por casos | ✅ agnóstica, lista tal cual |
+| `css-debug-explain-solve-and-suggest` | Diagnostica y resuelve bugs de CSS/layout en 4 fases (causa raíz → explicación → intervención mínima → mejores opciones). | Ninguna específica — puro razonamiento + navegación del código | ✅ agnóstica, lista tal cual |
+| `speech-to-text` | Transcribe un archivo de audio de conversación; pregunta primero si hace falta distinguir hablantes (diarización). | `whisper`; `whisperx` + `HF_TOKEN` si hay diarización | ⚠️ requiere `whisper`/`whisperx` disponibles en el entorno destino |
+| `wayfinder` | Planifica un trabajo grande que no cabe en una sesión: un "mapa" con tickets de **decisión** que se resuelven de a uno hasta que el camino está claro. Planifica, no ejecuta. | Ninguna específica — escribe markdown en `.scratch/` del repo. Externa (mattpocock), ver procedencia en su `SKILL.md`. | ✅ agnóstica, lista tal cual (se invoca a mano: `disable-model-invocation`) |
+| `orchestrate` | Orquesta una tarea grande dividiéndola en plan (modelo caro) + ejecución delegada en paralelo (modelo barato). Agnóstico de dominio. | Subagentes/threads paralelos — nombres de modelo hardcodeados (Fable 5 / Sonnet 5). | ⚠️ el patrón sirve; los nombres de modelo hay que ajustarlos si el cliente no tiene esos mismos modelos disponibles |
+| `product-designer-narrativa` | Genera narrativas breves para motivar flujos de conversión desde psicología humana y diseño de producto. | Ninguna específica — puro razonamiento | ✅ agnóstica, lista tal cual |
 
-| Skill | Qué hace | Herramienta que asume | Lista para Hermes |
-|-------|----------|----------------------|-------------------|
-| `interview-me` | Entrevista de **una pregunta a la vez** con una hipótesis adjunta, hasta ~95% de confianza sobre lo que querés de verdad (no lo que creés que deberías querer). | `AskUserQuestion` (Claude Code) → en Hermes usamos `clarify`. | ⚠️ el método sirve; el paso de preguntas hay que hacerlo con `clarify` |
-| `idea-refine` | Refina una idea vaga en concepto accionable (divergente → convergente), con sesión de ideación y un one-pager. | `AskUserQuestion`, `Glob`/`Grep`/`Read` | ⚠️ parcial — las preguntas van por `clarify` |
-| `product-expert-definition-of-ready` | Evalúa un cambio de producto en 4 dimensiones (narrativa, conductual, copy, framing) ponderadas por momento del journey. | Ninguna específica — puro razonamiento + plantilla en `assets/` | ✅ lista tal cual |
-| `voz-tomas` | Ajusta tono/vocabulario para que un texto suene a como habla Tomás (no define narrativa ni contenido). | Ninguna específica — puro razonamiento + `ejemplos.md` para aprender por casos | ✅ lista tal cual |
-| `css-debug-explain-solve-and-suggest` | Diagnostica y resuelve bugs de CSS/layout en 4 fases (causa raíz → explicación → intervención mínima → mejores opciones). | Ninguna específica — puro razonamiento + navegación del código | ✅ lista tal cual |
-| `speech-to-text` | Transcribe un archivo de audio de conversación; pregunta primero si hace falta distinguir hablantes (diarización). | `whisper`; `whisperx` + `HF_TOKEN` si hay diarización | ⚠️ requiere `whisper`/`whisperx` disponibles en el entorno de Hermes |
-| `wayfinder` | Planifica un trabajo grande que no cabe en una sesión: un "mapa" con tickets de **decisión** que se resuelven de a uno hasta que el camino está claro. Planifica, no ejecuta. | Ninguna específica — escribe markdown en `.scratch/` del repo. Externa (mattpocock), ver procedencia en su `SKILL.md`. | ✅ lista tal cual (se invoca a mano: `disable-model-invocation`) |
+Cuando se instala una skill nueva (propia o de una [fuente
+externa](../rules/fuentes-externas-de-skills.md)), agregarla acá con su
+fila.
 
-## Cómo habilitar (symlink absoluto)
+## Habilitar en un cliente vía symlink
+
+Estrategia general (la misma que usa steipete para cualquier cliente): el
+directorio de skills del cliente apunta acá por symlink **absoluto** — así
+editás en un lado y se refleja en el otro, sin desincronizar.
+
+Ejemplo para Hermes:
 
 ```bash
 SRC=/home/tomas/Projects/agent-scripts/skills
 DST=/home/tomas/.hermes/skills
-for s in interview-me idea-refine product-expert-definition-of-ready voz-tomas css-debug-explain-solve-and-suggest speech-to-text wayfinder; do
+for s in interview-me idea-refine product-expert-definition-of-ready voz-tomas css-debug-explain-solve-and-suggest speech-to-text wayfinder orchestrate product-designer-narrativa; do
   ln -s "$SRC/$s" "$DST/$s"
 done
 ```
 
-Para quitar una: `rm /home/tomas/.hermes/skills/<nombre>`.
+Para quitar una: `rm $DST/<nombre>`. Para otro cliente, mismo patrón con su
+propio directorio de skills como `DST`.
 
-## Notas de portabilidad (agent-agnóstico)
-
-- `interview-me` e `idea-refine` mencionan `AskUserQuestion` y herramientas de
-  Claude Code. En Hermes la pregunta *one-at-a-time* se hace con la tool
-  `clarify`; el resto del método es aplicable sin cambios.
-- `speech-to-text` asume binarios locales (`whisper`, y `whisperx` para
-  diarización, que además necesita `HF_TOKEN`); sin ellos no transcribe.
-- `product-expert-definition-of-ready` es agnóstico: solo razonamiento + la
-  plantilla en `assets/plantilla.md` y la guía en `references/guia-explicativa.md`.
-
-## Verificación
-
-Después de crear los symlinks, confirmá que Hermes los ve:
+## Verificación (ejemplo Hermes)
 
 ```bash
-hermes skills list | grep -E "interview-me|idea-refine|product-expert|voz-tomas|css-debug|speech-to-text|wayfinder"
+hermes skills list | grep -E "interview-me|idea-refine|product-expert|voz-tomas|css-debug|speech-to-text|wayfinder|orchestrate|product-designer"
 ```
 
-Si no aparecen, Hermes puede requerir reinicio de sesión o registro en el
-manifest de skills del perfil; avisar y revisar.
+Si no aparecen, el cliente puede requerir reinicio de sesión o registro en
+su manifest de skills; avisar y revisar.

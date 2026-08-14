@@ -7,14 +7,20 @@ depende) y espera el OK.
 
 ## Fuentes declaradas
 
-| Fuente | Clon local (hermano de este repo) | Qué aporta |
+| Fuente | Cómo se accede | Qué aporta |
 |---|---|---|
-| [steipete/agent-scripts](https://github.com/steipete/agent-scripts) | `../agent-scripts-stein` | Estrategia de distribución (symlink global, línea READ) y skills propias |
-| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | `../agent-skills-addy` | Anatomía de skills, `agents/` como unidad instalable |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | `../mattpocock-skills` | Skills de ingeniería "real" (planificación, revisión, TDD), pensadas para adaptarse |
+| [steipete/agent-scripts](https://github.com/steipete/agent-scripts) | Clon hermano `../agent-scripts-stein` | Estrategia de distribución (symlink global, línea READ) y skills propias |
+| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | Clon hermano `../agent-skills-addy` | Anatomía de skills, `agents/` como unidad instalable |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | Submódulo `vendor/mattpocock-skills` (dentro de este repo) | Skills de ingeniería "real" (planificación, revisión, TDD), pensadas para adaptarse |
 
-Las tres se asumen clonadas como **hermanas** de `agent-scripts` en el
-filesystem. Si el clon no existe, avisar — no clonar por cuenta propia.
+Las dos primeras se asumen clonadas como **hermanas** de `agent-scripts` en
+el filesystem — si el clon no existe, avisar, no clonar por cuenta propia.
+`mattpocock/skills` es distinto: vive como **submódulo git** de este repo en
+`vendor/mattpocock-skills`, así que siempre está presente tras `git clone
+--recurse-submodules` (o `git submodule update --init`). El submódulo fija
+un commit — no se actualiza solo; correr `git submodule update --remote
+vendor/mattpocock-skills` cuando se quiera avanzar, y confirmar el bump de
+commit en un commit propio.
 
 ## Por qué requiere aprobación
 
@@ -26,8 +32,9 @@ alcance, no un detalle de implementación — la toma Tomás.
 
 ## Cómo actuar (agente)
 
-1. **Buscar** en los clones locales y reportar: nombre, fuente, ruta,
-   resumen de una línea, dependencias detectadas.
+1. **Buscar** en los clones locales y en `vendor/mattpocock-skills` y
+   reportar: nombre, fuente, ruta, resumen de una línea, dependencias
+   detectadas.
 2. **Proponer modo de instalación** y sus consecuencias:
    - **Symlink** a la ruta del clon upstream → se actualiza con `git pull` en
      ese repo, pero editarla es editar el clon de otro (no versionado acá).
@@ -36,8 +43,8 @@ alcance, no un detalle de implementación — la toma Tomás.
 3. **Esperar aprobación explícita.** Sin OK, no se crea ni symlink ni copia.
 4. Al instalar, dejar **procedencia** en la skill: repo, ruta upstream,
    commit y fecha. Sin eso se pierde de dónde vino y qué se adaptó.
-5. Registrar la skill en el índice de [`../docs/skills-hermes.md`](../docs/skills-hermes.md)
-   si aplica al cliente de agente correspondiente.
+5. Registrar la skill en el catálogo [`../docs/skills-hermes.md`](../docs/skills-hermes.md),
+   con su nivel de portabilidad y notas por cliente si aplica.
 
 ## Anti-patrón
 
