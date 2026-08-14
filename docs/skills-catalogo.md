@@ -21,6 +21,9 @@ otro lado tal cual o si necesita adaptación.
 | `wayfinder` | Planifica un trabajo grande que no cabe en una sesión: un "mapa" con tickets de **decisión** que se resuelven de a uno hasta que el camino está claro. Planifica, no ejecuta. | Ninguna específica — escribe markdown en `.scratch/` del repo. Externa (mattpocock), ver procedencia en su `SKILL.md`. | ✅ agnóstica, lista tal cual (se invoca a mano: `disable-model-invocation`) |
 | `orchestrate` | Orquesta una tarea grande dividiéndola en plan (modelo caro) + ejecución delegada en paralelo (modelo barato). Agnóstico de dominio. | Subagentes/threads paralelos — nombres de modelo hardcodeados (Fable 5 / Sonnet 5). | ⚠️ el patrón sirve; los nombres de modelo hay que ajustarlos si el cliente no tiene esos mismos modelos disponibles |
 | `product-designer-narrativa` | Genera narrativas breves para motivar flujos de conversión desde psicología humana y diseño de producto. | Ninguna específica — puro razonamiento | ✅ agnóstica, lista tal cual |
+| `grilling` | Entrevista relentless con **rondas por frontera** (solo pregunta lo que ya tiene prerequisitos resueltos) y delega hechos a sub-agentes en vez de preguntarlos. Versión más elaborada de `interview-me`. | Ninguna específica — sub-agentes para buscar hechos. Externa (mattpocock), ver procedencia en su `SKILL.md`. | ✅ agnóstica, lista tal cual |
+| `domain-modeling` | Construye y afila el modelo de dominio de un proyecto (glosario, ADRs) mientras se diseña. | Ninguna específica — escribe `CONTEXT.md`/ADRs en el repo. Externa (mattpocock), ver procedencia en su `SKILL.md`. | ✅ agnóstica, lista tal cual |
+| `grill-with-docs` | `grilling` + `domain-modeling` combinadas: entrevista relentless que además deja ADRs y glosario. | Depende de `grilling` y `domain-modeling` (ambas en este repo). Externa (mattpocock), ver procedencia en su `SKILL.md`. | ✅ agnóstica, lista tal cual (se invoca a mano: `disable-model-invocation`) |
 
 Cuando se instala una skill nueva (propia o de una [fuente
 externa](../rules/fuentes-externas-de-skills.md)), agregarla acá con su
@@ -37,7 +40,7 @@ Ejemplo para Hermes:
 ```bash
 SRC=/home/tomas/Projects/agent-scripts/skills
 DST=/home/tomas/.hermes/skills
-for s in interview-me idea-refine product-expert-definition-of-ready voz-tomas css-debug-explain-solve-and-suggest speech-to-text wayfinder orchestrate product-designer-narrativa; do
+for s in interview-me idea-refine product-expert-definition-of-ready voz-tomas css-debug-explain-solve-and-suggest speech-to-text wayfinder orchestrate product-designer-narrativa grilling domain-modeling grill-with-docs; do
   ln -s "$SRC/$s" "$DST/$s"
 done
 ```
@@ -45,7 +48,7 @@ done
 Para quitar una: `rm $DST/<nombre>`. Para otro cliente, mismo patrón con su
 propio directorio de skills como `DST`.
 
-## Estado real instalado (verificado 2026-08-14)
+## Estado real instalado (verificado 2026-08-14, actualizado tras instalar wayfinder/grilling/domain-modeling/grill-with-docs)
 
 A diferencia del índice de arriba (qué existe y es portable), esta tabla
 dice qué symlink hay **de verdad** en cada cliente ahora mismo. Se
@@ -61,8 +64,11 @@ no asumir.
 | `css-debug-explain-solve-and-suggest` | ✅ | ✅ | ✅ |
 | `voz-tomas` | — no symlinkeada | — no symlinkeada | — no symlinkeada |
 | `speech-to-text` | — no symlinkeada | — no symlinkeada | — no symlinkeada |
-| `wayfinder` | — no symlinkeada | — no symlinkeada | — no symlinkeada |
 | `orchestrate` | — no symlinkeada | — no symlinkeada | — no symlinkeada |
+| `wayfinder` | ✅ | ✅ | ✅ |
+| `grilling` | ✅ | ✅ | ✅ |
+| `domain-modeling` | ✅ | ✅ | ✅ |
+| `grill-with-docs` | ✅ | ✅ | ✅ |
 
 ## Verificación (ejemplo Hermes)
 
