@@ -53,6 +53,13 @@ quiere adquirir — corregirlo cuando no las siga. Hoy: escritura breve.
   cerrarla solo en el repo de producto). Incluye cambios de taxonomía en
   `docs-kit/` (bump VERSION, luego migran consumidores).
   Fuente: [`rules/reglas-globales.md`](rules/reglas-globales.md).
+- **Dev servers multi-proyecto:** varios proyectos pueden estar ya corriendo
+  en esta máquina. Antes de levantar uno, leer
+  `~/own/multi-project-router/INDEX.md` (tabla Tailscale + `dev:` del
+  proyecto). Si el puerto/cwd ya escucha → dar `dev.url` (Tailscale), no
+  spawnear otro ni pegar localhost como URL principal. Solo arrancar si no
+  hay instancia. Si el puerto está tomado por otro cwd, preguntar.
+  Fuente: [`rules/dev-servers-multi-proyecto.md`](rules/dev-servers-multi-proyecto.md).
 
 Las reglas específicas de cada proyecto viven en el AGENTS.md de ese repo,
 después de la línea READ — incluidas las de este mismo repo (ver
