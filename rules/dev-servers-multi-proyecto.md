@@ -30,6 +30,18 @@ Cuando el usuario pida ver, probar, abrir o revisar la app en el navegador:
 6. Si el puerto preferido está ocupado por **otro** cwd → preguntar; no abrir
    un segundo puerto ni inventar otra URL Tailscale.
 
+## HMR de Vite detrás de otro server
+
+Si un proyecto corre Vite detrás de otro server (p. ej. Rails + `vite_rails`),
+el `dev.url` normal no alcanza para hot reload en remoto: el cliente de HMR
+abre un websocket directo al puerto del dev server de Vite, no al del server
+principal, y ese puerto casi nunca está en Tailscale Serve.
+
+Estándar: puerto `85XX` reservado por proyecto para ese websocket (ver
+`INDEX.md` § Rango 85XX). Si el proyecto define `dev.hmr_url`, darlo junto al
+`dev.url` cuando el usuario vaya a usar hot reload desde otra máquina del
+tailnet.
+
 ## Anti-patrones
 
 - Empezar con `pnpm run dev` sin mirar el router ni los puertos.
