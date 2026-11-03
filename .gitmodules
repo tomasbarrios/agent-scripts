@@ -1,3 +1,9 @@
 [submodule "vendor/mattpocock-skills"]
 	path = vendor/mattpocock-skills
 	url = https://github.com/mattpocock/skills.git
+[submodule "vendor/steveruizok-product-description"]
+	path = vendor/steveruizok-product-description
+	url = https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f.git
+[submodule "vendor/asmartbear-asb-skills"]
+	path = vendor/asmartbear-asb-skills
+	url = https://github.com/asmartbear/asb-skills.git

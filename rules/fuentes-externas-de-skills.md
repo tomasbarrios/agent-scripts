@@ -12,15 +12,24 @@ depende) y espera el OK.
 | [steipete/agent-scripts](https://github.com/steipete/agent-scripts) | Clon hermano `../agent-scripts-stein` | Estrategia de distribución (symlink global, línea READ) y skills propias |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | Clon hermano `../agent-skills-addy` | Anatomía de skills, `agents/` como unidad instalable |
 | [mattpocock/skills](https://github.com/mattpocock/skills) | Submódulo `vendor/mattpocock-skills` (dentro de este repo) | Skills de ingeniería "real" (planificación, revisión, TDD), pensadas para adaptarse |
+| [steveruizok/product-description](https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f) | Submódulo `vendor/steveruizok-product-description` (gist) | Spec de comportamiento outside-in (feature a feature, event a event) a partir de código y tests, luego verificación contra el producto vivo |
+| [asmartbear/asb-skills](https://github.com/asmartbear/asb-skills) | Submódulo `vendor/asmartbear-asb-skills` (dentro de este repo) | 21 skills de estrategia de producto/negocio de Jason Cohen (cliente ideal, entrevistas de descubrimiento, pricing, positioning); ninguna toca código |
+| [cursor/plugins/pstack](https://github.com/cursor/plugins/tree/main/pstack) (por Lauren Tan, `poteto`) | Copia (vendor) en `.cursor/plugins/pstack` — ver `PROVENANCE.md` ahí. Instalación user-scope: `~/.cursor/plugins/local/pstack` (hardlinks; no symlink) | Plugin de Cursor: skills + principles + agents + automations para ingeniería rigurosa asistida por IA |
+
+Cada submódulo tiene su página con las skills que ofrece en
+[`../docs/vendors/`](../docs/vendors/README.md).
 
 Las dos primeras se asumen clonadas como **hermanas** de `agent-scripts` en
 el filesystem — si el clon no existe, avisar, no clonar por cuenta propia.
-`mattpocock/skills` es distinto: vive como **submódulo git** de este repo en
-`vendor/mattpocock-skills`, así que siempre está presente tras `git clone
---recurse-submodules` (o `git submodule update --init`). El submódulo fija
-un commit — no se actualiza solo; correr `git submodule update --remote
-vendor/mattpocock-skills` cuando se quiera avanzar, y confirmar el bump de
-commit en un commit propio.
+`mattpocock/skills` y el gist de Ruiz viven como **submódulos git** de este
+repo, así que están presentes tras `git clone --recurse-submodules` (o
+`git submodule update --init`). Cada submódulo fija un commit — no se
+actualiza solo; correr `git submodule update --remote <path>` cuando se
+quiera avanzar, y confirmar el bump de commit en un commit propio.
+
+El gist es plano (`SKILL.md` en la raíz, no `skills/<name>/`). Está en
+biblioteca, no instalado: no copiar a `skills/` ni correr `install.sh`
+sin aprobación.
 
 ## Por qué requiere aprobación
 
@@ -32,9 +41,9 @@ alcance, no un detalle de implementación — la toma Tomás.
 
 ## Cómo actuar (agente)
 
-1. **Buscar** en los clones locales y en `vendor/mattpocock-skills` y
-   reportar: nombre, fuente, ruta, resumen de una línea, dependencias
-   detectadas.
+1. **Buscar** en los clones locales, `vendor/mattpocock-skills` y
+   `vendor/steveruizok-product-description`, y reportar: nombre, fuente,
+   ruta, resumen de una línea, dependencias detectadas.
 2. **Proponer modo de instalación** y sus consecuencias:
    - **Symlink** a la ruta del clon upstream → se actualiza con `git pull` en
      ese repo, pero editarla es editar el clon de otro (no versionado acá).
