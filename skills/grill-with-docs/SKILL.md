@@ -5,9 +5,9 @@ disable-model-invocation: true
 ---
 
 > **Procedencia:** copiada de [mattpocock/skills](https://github.com/mattpocock/skills),
-> `skills/engineering/grill-with-docs`, commit `8b78b53` (2026-08-13), sin adaptación.
+> `skills/engineering/grill-with-docs`, commit `d1478fc` (v1.3.2, 2026-10-29), sin adaptación.
 > Depende de [`grilling`](../grilling/SKILL.md) y [`domain-modeling`](../domain-modeling/SKILL.md),
 > instaladas junto con esta — ver
 > [`rules/fuentes-externas-de-skills.md`](../../rules/fuentes-externas-de-skills.md).
 
-Run a `/grilling` session, using the `/domain-modeling` skill.
+Call the Skill tool twice, for "grilling" and "domain-modeling".
