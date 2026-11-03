@@ -1,7 +1,7 @@
 # agent-scripts
 
 Repo central personal de reglas y skills para agentes (Claude Code, Cursor,
-OpenCode). Fuente de verdad única; los proyectos apuntan acá.
+Hermes, bb). Fuente de verdad única; los proyectos apuntan acá.
 
 ## Dónde encontrar qué
 
@@ -9,10 +9,10 @@ OpenCode). Fuente de verdad única; los proyectos apuntan acá.
 - [`rules/`](rules/) — reglas consolidadas, una por archivo. Índice en su README.
 - [`rules/reforzar.md`](rules/reforzar.md) — reglas que quiero adquirir;
   **peso alto**: los agentes las aplican activamente y me corrigen.
-- [`skills/`](skills/) — skills centralizadas (fuente de verdad); cada
-  cliente de agente las enlaza por symlink desde su propio directorio de
-  skills. No usar `.agents/skills/` en este repo.
-  Ejemplo de enlazado: [`docs/skills-catalogo.md`](docs/skills-catalogo.md).
+- [`skills/`](skills/) — skills centralizadas (fuente de verdad); Claude,
+  Hermes y Cursor las enlazan por symlink, bb con directorio real (rechaza
+  symlinks). No usar `.agents/skills/` en este repo.
+  Cómo instalar: [`docs/skills-catalogo.md`](docs/skills-catalogo.md).
 - [`docs/instalar-reglas.md`](docs/instalar-reglas.md) — **cómo instalar
   reglas en un proyecto**: propagar el puntero a este repo (estrategia
   steipete), no copiar contenido.

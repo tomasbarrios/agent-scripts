@@ -45,7 +45,7 @@ locales (symlinkear el archivo entero pisaría ese contenido):
 2. Como primera línea, agregar el puntero:
 
    ```
-   READ ~/Projects/agent-scripts/AGENTS.MD BEFORE ANYTHING (skip if missing).
+   READ ~/Projects/agent-scripts/AGENTS.md BEFORE ANYTHING (skip if missing).
    ```
 
 3. Debajo de esa línea, dejar solo las reglas específicas de ese proyecto.

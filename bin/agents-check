@@ -1,0 +1,247 @@
+#!/usr/bin/env python3
+"""agents-check — revisa que los proyectos del router sigan la regla de fuente única.
+
+Solo lectura: nunca modifica archivos. Regla: rules/fuente-unica-instrucciones.md.
+
+Supuesto de parseo del INDEX: cada proyecto es una sección `### <nombre>` y
+su ruta está en una línea `- **Path:** `/ruta/absoluta`` dentro de esa sección.
+Secciones sin línea Path se ignoran.
+"""
+import argparse
+import difflib
+import os
+import re
+import subprocess
+import sys
+
+HOME = os.path.expanduser("~")
+AGENT_SCRIPTS = os.path.join(HOME, "Projects", "agent-scripts")
+DEFAULT_INDEX = os.path.join(HOME, "own", "multi-project-router", "INDEX.md")
+SKIP_DIRS = {".git", "node_modules", "vendor", ".venv", "venv", "tmp", "coverage",
+             "dist", "build", "log", "storage", "__pycache__", ".bundle"}
+
+POINTER_RE = re.compile(r"(?:~|/home/[^/\s]+)/Projects/agent-scripts/[^\s`'\")\]]*")
+# "Fuente: ...", "Fuente de verdad: ...", "Fuente canónica (...): ..." con una ruta .md o con "/"
+FUENTE_RE = re.compile(r"^\s*(?:[-*]\s*)?\**Fuente\b[^:\n]{0,60}:\**\s*(.+)$", re.IGNORECASE)
+
+
+def fuente_lines(lines):
+    out = []
+    for l in lines:
+        m = FUENTE_RE.match(l)
+        if m and re.search(r"(\.md\b|/)", m.group(1)):
+            out.append(m.group(1))
+    return out
+ALWAYS_RE = re.compile(r"^\s*alwaysApply\s*:\s*true\s*$", re.IGNORECASE)
+
+
+class Report:
+    def __init__(self):
+        self.groups = []  # (titulo, [(nivel, msg)])
+        self.counts = {"OK": 0, "AVISO": 0, "ERROR": 0}
+
+    def group(self, title):
+        items = []
+        self.groups.append((title, items))
+        return lambda lvl, msg: (items.append((lvl, msg)), self.counts.__setitem__(lvl, self.counts[lvl] + 1))
+
+    def render(self, quiet_ok=False):
+        out = []
+        for title, items in self.groups:
+            out.append(f"== {title}")
+            for lvl, msg in items:
+                if quiet_ok and lvl == "OK":
+                    continue
+                out.append(f"  [{lvl}] {msg}")
+            out.append("")
+        c = self.counts
+        out.append(f"Resumen: {c['OK']} OK, {c['AVISO']} AVISO, {c['ERROR']} ERROR")
+        return "\n".join(out)
+
+
+def parse_index(path):
+    projects, name = [], None
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            m = re.match(r"^###\s+(.+?)\s*$", line)
+            if m:
+                name = m.group(1)
+                continue
+            m = re.match(r"^\s*-\s*\*\*Path:\*\*\s*`([^`]+)`", line)
+            if m and name:
+                projects.append((name, os.path.expanduser(m.group(1))))
+                name = None
+    return projects
+
+
+def walk(root, names, exclude):
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames[:] = sorted(d for d in dirnames
+                             if d not in SKIP_DIRS and os.path.join(dirpath, d) not in exclude)
+        for fn in sorted(filenames):
+            if (isinstance(names, set) and fn in names) or (names == ".mdc" and fn.endswith(".mdc") and
+                               os.path.basename(dirpath) == "rules" and
+                               os.path.basename(os.path.dirname(dirpath)) == ".cursor"):
+                yield os.path.join(dirpath, fn)
+
+
+def rel(p, base):
+    return os.path.relpath(p, base)
+
+
+def git_tracked(path):
+    d = os.path.dirname(path)
+    try:
+        r = subprocess.run(["git", "-C", d, "rev-parse", "--is-inside-work-tree"],
+                           capture_output=True, text=True)
+        if r.returncode != 0:
+            return None
+        r = subprocess.run(["git", "-C", d, "ls-files", "--error-unmatch", os.path.basename(path)],
+                           capture_output=True, text=True)
+        return r.returncode == 0
+    except FileNotFoundError:
+        return None
+
+
+def resolve_fuente(raw, mdc, project):
+    m = re.search(r"\]\(([^)]+)\)", raw) or re.search(r"`([^`]+)`", raw)
+    target = (m.group(1) if m else raw.strip().split()[0]).split("#")[0].strip()
+    if not target:
+        return target, False
+    t = os.path.expanduser(target)
+    if os.path.isabs(t):
+        return target, os.path.exists(t)
+    cands = [os.path.join(os.path.dirname(mdc), t), os.path.join(project, t)]
+    top = subprocess.run(["git", "-C", os.path.dirname(mdc), "rev-parse", "--show-toplevel"],
+                         capture_output=True, text=True)
+    if top.returncode == 0:
+        cands.append(os.path.join(top.stdout.strip(), t))
+    # .cursor/rules/x.mdc → raíz del dir que contiene .cursor
+    cands.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(mdc))), t))
+    return target, any(os.path.exists(c) for c in cands)
+
+
+def norm(stem):
+    s = re.sub(r"^(portable|[a-z0-9]+)_", "", stem.lower())
+    return s.replace("_", "-")
+
+
+def check_project(rep, name, path, exclude, rule_stems):
+    add = rep.group(f"{name} ({path})")
+    if not os.path.isdir(path):
+        add("ERROR", "la ruta del INDEX no existe")
+        return
+    add("OK", "la ruta existe")
+
+    agents = list(walk(path, {"AGENTS.md"}, exclude))
+    if not agents:
+        add("AVISO", "no hay AGENTS.md (entrypoint distinto; la regla espera AGENTS.md como fuente)")
+    for a in agents:
+        ra = rel(a, path)
+        with open(a, encoding="utf-8", errors="replace") as fh:
+            text = fh.read()
+        ptrs = sorted(set(p.rstrip(".,;:") for p in POINTER_RE.findall(text)))
+        bad = [p for p in ptrs if not os.path.exists(os.path.expanduser(p.replace("/home/" + os.path.basename(HOME), HOME, 1)))]
+        for p in bad:
+            add("ERROR", f"{ra}: puntero que no resuelve (respetando mayúsculas): {p}")
+        for p in ptrs:
+            full = os.path.expanduser(p.replace("/home/" + os.path.basename(HOME), HOME, 1))
+            if p not in bad and os.path.islink(full) and os.path.basename(os.path.realpath(full)) != os.path.basename(full):
+                add("AVISO", f"{ra}: {p} resuelve solo vía symlink con otro nombre (corregir mayúsculas)")
+        if ptrs and not bad:
+            add("OK", f"{ra}: {len(ptrs)} puntero(s) a agent-scripts resuelven")
+        cl = os.path.join(os.path.dirname(a), "CLAUDE.md")
+        rcl = rel(cl, path)
+        if not os.path.exists(cl):
+            add("ERROR", f"{rcl}: no existe (debe contener @AGENTS.md)")
+        else:
+            with open(cl, encoding="utf-8", errors="replace") as fh:
+                lines = [l.strip() for l in fh]
+            if "@AGENTS.md" in lines:
+                add("OK", f"{rcl}: contiene @AGENTS.md")
+            else:
+                add("ERROR", f"{rcl}: no contiene la línea @AGENTS.md")
+
+    mdcs = list(walk(path, ".mdc", exclude))
+    for m in mdcs:
+        rm = rel(m, path)
+        with open(m, encoding="utf-8", errors="replace") as fh:
+            lines = fh.read().splitlines()
+        problems = 0
+        if any(ALWAYS_RE.match(l) for l in lines):
+            add("ERROR", f"{rm}: alwaysApply: true (debe ser adaptador por glob)")
+            problems += 1
+        fuentes = fuente_lines(lines)
+        if not fuentes:
+            add("ERROR", f"{rm}: sin línea 'Fuente: <ruta.md>'")
+            problems += 1
+        else:
+            for raw in fuentes:
+                target, ok = resolve_fuente(raw, m, path)
+                if not ok:
+                    add("ERROR", f"{rm}: Fuente apunta a archivo inexistente: {target}")
+                    problems += 1
+        tr = git_tracked(m)
+        if tr is False:
+            add("AVISO", f"{rm}: sin trackear en git")
+            problems += 1
+        stem = norm(os.path.splitext(os.path.basename(m))[0])
+        for rs in rule_stems:
+            if difflib.SequenceMatcher(None, stem, rs).ratio() >= 0.7 or (len(stem) > 4 and (stem in rs or rs in stem)):
+                add("AVISO", f"{rm}: nombre parecido a agent-scripts/rules/{rs}.md (¿duplicado?)")
+                problems += 1
+                break
+        if not problems:
+            add("OK", f"{rm}: adaptador correcto")
+    if not mdcs:
+        add("OK", "sin .cursor/rules/*.mdc")
+
+
+def check_globals(rep):
+    add = rep.group("Globales")
+    cl = os.path.join(HOME, ".claude", "CLAUDE.md")
+    target = os.path.join(AGENT_SCRIPTS, "AGENTS.md")
+    if not os.path.islink(cl):
+        add("ERROR", "~/.claude/CLAUDE.md no es symlink al AGENTS.md global")
+    elif os.path.realpath(cl) != os.path.realpath(target):
+        add("ERROR", f"~/.claude/CLAUDE.md apunta a {os.readlink(cl)}, no a {target}")
+    else:
+        add("OK", "~/.claude/CLAUDE.md -> AGENTS.md global")
+    if os.path.exists(target):
+        add("OK", "~/Projects/agent-scripts/AGENTS.md existe")
+    else:
+        add("ERROR", "~/Projects/agent-scripts/AGENTS.md no existe")
+
+
+def main():
+    ap = argparse.ArgumentParser(
+        prog="agents-check",
+        description="Revisa (solo lectura) que los proyectos del INDEX del router sigan "
+                    "rules/fuente-unica-instrucciones.md. Nunca modifica archivos.",
+        epilog="Supuesto: el INDEX tiene secciones '### <nombre>' con una línea "
+               "'- **Path:** `/ruta`'. Exit 0 siempre, salvo --strict con errores (exit 1).")
+    ap.add_argument("--index", default=DEFAULT_INDEX, help=f"ruta al INDEX.md (default: {DEFAULT_INDEX})")
+    ap.add_argument("--strict", action="store_true", help="exit 1 si hay algún ERROR")
+    ap.add_argument("--quiet", action="store_true", help="no mostrar líneas OK")
+    args = ap.parse_args()
+
+    rep = Report()
+    if not os.path.exists(args.index):
+        print(f"[ERROR] no existe el INDEX: {args.index}")
+        return 1 if args.strict else 0
+    projects = parse_index(args.index)
+    rules_dir = os.path.join(AGENT_SCRIPTS, "rules")
+    rule_stems = sorted(os.path.splitext(f)[0] for f in os.listdir(rules_dir)
+                        if f.endswith(".md") and f != "README.md") if os.path.isdir(rules_dir) else []
+    all_paths = {p for _, p in projects}
+    check_globals(rep)
+    for name, path in projects:
+        exclude = {p for p in all_paths if p != path and p.startswith(path.rstrip("/") + "/")}
+        check_project(rep, name, path, exclude, rule_stems)
+    print(f"agents-check · INDEX: {args.index} · {len(projects)} proyectos\n")
+    print(rep.render(args.quiet))
+    return 1 if (args.strict and rep.counts["ERROR"]) else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

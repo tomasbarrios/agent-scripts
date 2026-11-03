@@ -1,7 +1,7 @@
 # Reglas globales (todos mis repos)
 
 Este archivo se lee antes que nada en cualquier repo mío, vía la línea:
-`READ ~/Projects/agent-scripts/AGENTS.MD BEFORE ANYTHING (skip if missing).`
+`READ ~/Projects/agent-scripts/AGENTS.md BEFORE ANYTHING (skip if missing).`
 
 ## A reforzar (peso alto)
 
@@ -15,6 +15,11 @@ quiere adquirir — corregirlo cuando no las siga. Hoy: escritura breve.
   bien escrito — sin modismos, apócopes ni voseo; términos técnicos se
   dejan en inglés.
   Fuente: [`rules/idioma-espanol-chileno.md`](rules/idioma-espanol-chileno.md).
+- **Código en inglés:** identificadores, commits y docs de código nuevo se
+  escriben en inglés, sin importar el idioma de la conversación; los
+  comentarios pueden ir en español chileno. No reescribe convenciones ya
+  existentes en el repo.
+  Fuente: [`rules/codigo-en-ingles.md`](rules/codigo-en-ingles.md).
 - **Alcance disciplinado:** solo lo aprobado; sin infraestructura
   especulativa; no salir del repo sin aprobación.
   Fuente: [`rules/alcance-disciplinado.md`](rules/alcance-disciplinado.md).
@@ -44,7 +49,9 @@ quiere adquirir — corregirlo cuando no las siga. Hoy: escritura breve.
   Fuente: [`rules/techlead-review.md`](rules/techlead-review.md).
 - **Fuentes externas de skills:** al pedir instalar una skill, se puede
   buscar en los clones hermanos declarados (`../agent-scripts-stein`,
-  `../agent-skills-addy`, `../mattpocock-skills`), pero **no se instala nada
+  `../agent-skills-addy`) y en los submódulos `vendor/mattpocock-skills`,
+  `vendor/steveruizok-product-description` y `vendor/asmartbear-asb-skills`,
+  pero **no se instala nada
   sin aprobación explícita**: primero reportar qué se encontró y proponer
   modo (symlink vs copia), después instalar dejando procedencia.
   Fuente: [`rules/fuentes-externas-de-skills.md`](rules/fuentes-externas-de-skills.md).
@@ -53,6 +60,12 @@ quiere adquirir — corregirlo cuando no las siga. Hoy: escritura breve.
   cerrarla solo en el repo de producto). Incluye cambios de taxonomía en
   `docs-kit/` (bump VERSION, luego migran consumidores).
   Fuente: [`rules/reglas-globales.md`](rules/reglas-globales.md).
+- **Fuente única de instrucciones:** en los proyectos del INDEX del router,
+  las reglas viven en `AGENTS.md` (o `docs/agents/*.md`); `CLAUDE.md` solo
+  `@AGENTS.md` y los `.mdc` solo adaptadores por glob con `Fuente:`, sin
+  `alwaysApply`. Regla nueva → markdown; si es multi-repo, proponerla acá.
+  Validar con `bin/agents-check`.
+  Fuente: [`rules/fuente-unica-instrucciones.md`](rules/fuente-unica-instrucciones.md).
 - **Dev servers multi-proyecto:** varios proyectos pueden estar ya corriendo
   en esta máquina. Antes de levantar uno, leer
   `~/own/multi-project-router/INDEX.md` (tabla Tailscale + `dev:` del

@@ -8,6 +8,7 @@ acá desde sus archivos de herramienta (`AGENTS.md`, `.mdc`).
 |-------|---------------|
 | [declaracion-vs-explicacion.md](declaracion-vs-explicacion.md) | Al crear o editar cualquier regla, skill o hook |
 | [idioma-espanol-chileno.md](idioma-espanol-chileno.md) | En toda respuesta al usuario, siempre |
+| [codigo-en-ingles.md](codigo-en-ingles.md) | Al escribir código nuevo (identificadores, comentarios, commits, docs) |
 | [alcance-disciplinado.md](alcance-disciplinado.md) | Al implementar cualquier plan o pedido |
 | [comunicacion-pedagogica.md](comunicacion-pedagogica.md) | Al redactar respuestas, reviews, commits o docs |
 | [aviso-brecha-skill.md](aviso-brecha-skill.md) | Al crear un archivo/script para completar lo que un skill no cubrió |

@@ -30,12 +30,11 @@ Cuando el usuario pida ver, probar, abrir o revisar la app en el navegador:
 6. Si el puerto preferido está ocupado por **otro** cwd → preguntar; no abrir
    un segundo puerto ni inventar otra URL Tailscale.
 
-## HMR de Vite detrás de otro server
+## HMR / live-reload detrás de otro server
 
-Si un proyecto corre Vite detrás de otro server (p. ej. Rails + `vite_rails`),
-el `dev.url` normal no alcanza para hot reload en remoto: el cliente de HMR
-abre un websocket directo al puerto del dev server de Vite, no al del server
-principal, y ese puerto casi nunca está en Tailscale Serve.
+Si el cliente de hot reload abre un websocket a un puerto distinto del de la
+app (Vite detrás de Rails, Remix LiveReload en `:8002`, etc.), el `dev.url`
+normal no alcanza para reload en remoto.
 
 Estándar: puerto `85XX` reservado por proyecto para ese websocket (ver
 `INDEX.md` § Rango 85XX). Si el proyecto define `dev.hmr_url`, darlo junto al
@@ -54,10 +53,23 @@ tailnet.
 
 ## Mantenimiento
 
-Al agregar un proyecto con UI local, o al cambiar puerto / Serve:
+Al agregar un proyecto con UI local, o al cambiar puerto / Serve, completar
+los 6 pasos (si falta uno, el server queda vivo pero invisible o sin
+autoarranque):
 
-1. Actualizar `tailscale serve` en el Mac mini.
-2. Actualizar la tabla y el `dev:` en `multi-project-router/INDEX.md`.
-3. Opcional: el mismo bloque en el `ROUTING.md` del proyecto.
+- [ ] 1. **`INDEX.md`:** fila en la tabla Tailscale (y en § Rango 85XX si hay
+  HMR) + bloque `dev:` del proyecto en `~/own/multi-project-router/INDEX.md`.
+- [ ] 2. **`ROUTING.md` espejo:** el mismo bloque `dev:` (cwd, command,
+  package_manager, port, url, hmr_url) en el `ROUTING.md` del proyecto.
+- [ ] 3. **Serve:** línea `tailscale serve --bg --https=<puerto público> http://127.0.0.1:<puerto local>`
+  en `~/.local/bin/tailscale-serve-setup` (validar con `bash -n`).
+- [ ] 4. **Portal:** tarjeta en el portal Caddy
+  (`~/.local/caddy/portal/index.html`) con la URL Tailscale del proyecto.
+- [ ] 5. **Systemd (si es permanente):** unidad de usuario
+  `~/.config/systemd/user/<proyecto>.service` que ejecute un wrapper
+  `~/.local/bin/<proyecto>-dev` (cwd + comando + puerto fijo), con
+  `WantedBy=default.target`; activar con `systemctl --user enable <proyecto>`.
+- [ ] 6. **Orden de arranque:** agregar la unidad a `After=` y `Wants=` de
+  `~/.config/systemd/user/tailscale-serve.service`.
 
 La regla de agente no guarda puertos: solo apunta al índice.
